@@ -6,6 +6,6 @@
 		<setting name="mapUnderscoreToCamelCase" value="True"/>
 	</settings>
 	<typeAliases>
-	    <package  name="com.naturemobility.api.dto" />
+	    <package  name="kr.co.zzimcar.dto" />
 	</typeAliases>
 </configuration>
