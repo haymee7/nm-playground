@@ -2,13 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.zzimcar.dao.BlogDao">
-  <select id="retrieveOne" parameterType="int" resultType="BlogDto">
-    SELECT
-      b.pid, b.title, b.post, b.writer, b.created_at, b.updated_at
-    FROM
-      playground.blog b
-    WHERE
-      b.pid = #{pid}
-      AND b.deleted_at IS NULL
-  </select>
+  <insert id="save" parameterType="BlogDto">
+    INSERT playground.blog (
+      title, post, writer
+    ) VALUES (
+      #{title}, #{post}, #{writer}
+    )
+  </insert>
 </mapper>

@@ -1,5 +1,6 @@
 package kr.co.zzimcar.dto;
 
+import kr.co.zzimcar.enumeration.ResponseCode;
 import kr.co.zzimcar.exception.ApiException;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,19 @@ public class ResponseDto<T> {
   }
 
 
+  public ResponseDto(ResponseCode code) {
+    this.success = false;
+    this.code = code.getCode();
+    this.message = code.getMessage();
+  }
+
+
+  public ResponseDto(String code, String message) {
+    this.success = false;
+    this.code = code;
+    this.message = message;
+  }
+
   public ResponseDto(String message) {
     this.success = false;
     this.message = message;
@@ -32,9 +46,4 @@ public class ResponseDto<T> {
     this.message = ex.getMessage();
   }
 
-
-  public ResponseDto(T data) {
-    this.success = true;
-    this.data = data;
-  }
 }

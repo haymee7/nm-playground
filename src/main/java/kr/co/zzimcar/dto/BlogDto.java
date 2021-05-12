@@ -17,4 +17,10 @@ public class BlogDto {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private LocalDateTime deletedAt;
+
+  public BlogDto(BlogReqDto blogReqDto) {
+    this.title = blogReqDto.getTitle();
+    this.post = blogReqDto.getPost();
+    this.writer = blogReqDto.getWriter();
+  }
 }
