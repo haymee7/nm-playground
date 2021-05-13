@@ -3,6 +3,7 @@ package kr.co.zzimcar.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 import java.time.LocalDateTime;
 
@@ -22,5 +23,13 @@ public class BlogDto {
     this.title = blogReqDto.getTitle();
     this.post = blogReqDto.getPost();
     this.writer = blogReqDto.getWriter();
+  }
+
+  public BlogDto(int pid, BlogReqDto blogReqDto){
+    this.pid = pid;
+    this.title = blogReqDto.getTitle();
+    this.post = blogReqDto.getPost();
+    this.writer = blogReqDto.getWriter();
+
   }
 }

@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface BlogDao {
-  void save(BlogDto blogDto);
+
+  int save(BlogDto blogDto);
+  int refresh(BlogDto blogDto);
 }

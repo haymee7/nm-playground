@@ -44,8 +44,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     return buildResponseEntity(new ResponseDto<>("요청 JSON 포맷 오류"));
   }
 
-  @ExceptionHandler(ApiException.class)
+  @ExceptionHandler(ApiException.class)  //ApiException으로 들어오느 에러 제어
   protected ResponseEntity<Object> handleIntApiException(ApiException ex) {
-    return buildResponseEntity(new ResponseDto(ex));
+    return buildResponseEntity(new ResponseDto(ex));  // buildResponseEntity는
+                                                      // 새로운 ResponseDto를 만들고 ex를 담아서 보냄
   }
 }

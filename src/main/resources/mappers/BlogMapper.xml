@@ -3,10 +3,22 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.zzimcar.dao.BlogDao">
   <insert id="save" parameterType="BlogDto">
-    INSERT playground.blog (
-      title, post, writer
-    ) VALUES (
-      #{title}, #{post}, #{writer}
+    INSERT
+    playground.blog (title, post, writer)
+    VALUES (
+    #{title},
+    #{post},
+    #{writer}
     )
   </insert>
+
+  <update id="refresh" parameterType="BlogDto">
+    UPDATE playground.blog
+    SET TITLE = #{title}, POST = #{post}, WRITER = #{writer}
+    WHERE PID = #{pid}
+  </update>
+  
+<!--  <select id="request"-->
 </mapper>
+
+

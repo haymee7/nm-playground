@@ -40,10 +40,10 @@ public class ResponseDto<T> {
   }
 
 
-  public ResponseDto(ApiException ex) {
-    this.success = false;
-    this.code = ex.getCode();
-    this.message = ex.getMessage();
+  public ResponseDto(ApiException ex) {  //여기서 에러를 받음
+    this.success = false;                // 에러라는건 성공 실패
+    this.code = ex.getCode();            // 코드
+    this.message = ex.getMessage();      // 메세지 넘겨줌
   }
 
 }

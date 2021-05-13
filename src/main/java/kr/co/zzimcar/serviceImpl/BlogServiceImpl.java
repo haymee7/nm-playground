@@ -12,7 +12,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import static kr.co.zzimcar.enumeration.ResponseCode.BLOG_REFRESH_FAILED;
 import static kr.co.zzimcar.enumeration.ResponseCode.BLOG_SAVE_FAILED;
+
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +32,25 @@ public class BlogServiceImpl implements BlogService {
       log.info("-- 블로그 저장 실패", e);
 
       // return ResponseEntity.ok(new ResponseDto<>(BLOG_SAVE_FAILED));
-      throw new ApiException(BLOG_SAVE_FAILED);
+      throw new ApiException(BLOG_SAVE_FAILED);   //import enumeration으로 시켜줌
+    }
+  }
+
+//  @Override
+//  public ResponseEntity<ResponseDto<BlogDto>> require(BlogReqDto blogReqDto) {
+//
+//    return null;
+//  }
+
+  @Override
+  public ResponseEntity<ResponseDto<BlogReqDto>> revice(int pid, BlogReqDto blogReqDto) {
+    try {
+      blogDao.refresh(new BlogDto(pid, blogReqDto));
+      return ResponseEntity.ok(new ResponseDto<>(true));
+    } catch (Exception e) {
+      log.info("-- 블로그 수정 실패", e);
+      throw new ApiException(BLOG_REFRESH_FAILED);
     }
   }
 }
+
