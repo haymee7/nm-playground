@@ -3,6 +3,7 @@ package kr.co.zzimcar.serviceImpl;
 import kr.co.zzimcar.dao.BlogDao;
 import kr.co.zzimcar.dto.BlogDto;
 import kr.co.zzimcar.dto.BlogReqDto;
+import kr.co.zzimcar.dto.BlogResDto;
 import kr.co.zzimcar.dto.ResponseDto;
 import kr.co.zzimcar.exception.ApiException;
 import kr.co.zzimcar.service.BlogService;
@@ -20,6 +21,16 @@ public class BlogServiceImpl implements BlogService {
 
   private final Logger log = LogManager.getLogger(BlogServiceImpl.class);
   private final BlogDao blogDao;
+
+  @Override
+  public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(int pid) {
+    BlogDto blogDto = blogDao.retrieveOne(pid);
+    BlogResDto blogResDto = new BlogResDto(blogDto);
+    ResponseDto<BlogResDto> responseDto = new ResponseDto<>(true);
+    responseDto.setData(blogResDto);
+
+    return ResponseEntity.ok(responseDto);
+  }
 
   @Override
   public ResponseEntity<ResponseDto<Void>> create(BlogReqDto blogReqDto) {
