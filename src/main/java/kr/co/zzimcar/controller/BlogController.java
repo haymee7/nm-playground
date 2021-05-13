@@ -28,7 +28,7 @@ public class BlogController {
 
   @GetMapping("/{pid}")
   @ApiOperation("포스트 조회 API")
-  public ResponseEntity<ResponseDto<BlogResDto>> retriveOne(@PathVariable int pid) {
+  public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(@PathVariable int pid) {
     return blogService.retrieveOne(pid);
   }
 

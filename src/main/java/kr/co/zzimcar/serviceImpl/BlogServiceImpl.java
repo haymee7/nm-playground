@@ -24,7 +24,7 @@ public class BlogServiceImpl implements BlogService {
 
   @Override
   public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(int pid) {
-    BlogDto blogDto = blogDao.retriveOne(pid);
+    BlogDto blogDto = blogDao.retrieveOne(pid);
     BlogResDto blogResDto = new BlogResDto(blogDto);
     ResponseDto<BlogResDto> responseDto = new ResponseDto<>(true);
     responseDto.setData(blogResDto);
