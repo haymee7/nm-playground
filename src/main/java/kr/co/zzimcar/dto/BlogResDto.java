@@ -23,4 +23,5 @@ public class BlogResDto {
     this.title = blogDto.getTitle();
     this.createdAt = blogDto.getCreatedAt();
   }
+
 }

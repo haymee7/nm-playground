@@ -14,14 +14,24 @@
   </insert>
 
   <select id="retrieveOne" parameterType="int" resultType="BlogDto">
-    SELECT b.title,
-           b.post,
-           b.writer,
-           b.pid,
-           b.created_at
-    FROM playground.blog b
+    SELECT title,
+           post,
+           writer,
+           pid,
+           created_at
+    FROM playground.blog
     WHERE b.pid = #{pid}
   </select>
+    <select id="retrieve" parameterType="int" resultType="BlogDto">
+        SELECT title,
+               post,
+               writer,
+               pid,
+               created_at
+        FROM playground.blog
+                 LIMIT #{sp}, #{cnt}
+    </select>
+
   <update id="refresh" parameterType="BlogDto">
     UPDATE playground.blog
     SET TITLE  = #{title},
