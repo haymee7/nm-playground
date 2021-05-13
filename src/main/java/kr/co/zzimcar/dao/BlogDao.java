@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface BlogDao {
-
-  int save(BlogDto blogDto);
+  void save(BlogDto blogDto);
+  BlogDto retrieveOne(int pid);
   int refresh(BlogDto blogDto);
 }

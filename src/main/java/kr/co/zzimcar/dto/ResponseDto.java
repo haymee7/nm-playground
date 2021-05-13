@@ -3,12 +3,14 @@ package kr.co.zzimcar.dto;
 import kr.co.zzimcar.enumeration.ResponseCode;
 import kr.co.zzimcar.exception.ApiException;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class ResponseDto<T> {
   private boolean success;
   private String code;

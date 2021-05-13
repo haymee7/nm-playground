@@ -1,15 +1,13 @@
 package kr.co.zzimcar.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.apache.ibatis.type.Alias;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @ToString
+@RequiredArgsConstructor
 public class BlogDto {
   private int pid;
   private String title;

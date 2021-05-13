@@ -4,21 +4,29 @@
 <mapper namespace="kr.co.zzimcar.dao.BlogDao">
   <insert id="save" parameterType="BlogDto">
     INSERT
-    playground.blog (title, post, writer)
-    VALUES (
+    playground.blog (
+      title, post, writer
+    ) VALUES (
     #{title},
     #{post},
     #{writer}
     )
   </insert>
 
+  <select id="retrieveOne" parameterType="int" resultType="BlogDto">
+    SELECT b.title,
+           b.post,
+           b.writer,
+           b.pid,
+           b.created_at
+    FROM playground.blog b
+    WHERE b.pid = #{pid}
+  </select>
   <update id="refresh" parameterType="BlogDto">
     UPDATE playground.blog
-    SET TITLE = #{title}, POST = #{post}, WRITER = #{writer}
+    SET TITLE  = #{title},
+        POST   = #{post},
+        WRITER = #{writer}
     WHERE PID = #{pid}
   </update>
-  
-<!--  <select id="request"-->
 </mapper>
-
-
