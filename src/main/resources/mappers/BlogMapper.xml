@@ -9,4 +9,13 @@
       #{title}, #{post}, #{writer}
     )
   </insert>
+
+  <select id="retriveOne" parameterType="int" resultType="BlogDto">
+    SELECT
+      b.title, b.post, b.writer, b.pid, b.created_at
+    FROM
+      playground.blog b
+    WHERE
+      b.pid = #{pid}
+  </select>
 </mapper>
