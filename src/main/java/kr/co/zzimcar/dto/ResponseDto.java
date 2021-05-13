@@ -20,13 +20,11 @@ public class ResponseDto<T> {
     this.success = success;
   }
 
-
   public ResponseDto(ResponseCode code) {
     this.success = false;
     this.code = code.getCode();
     this.message = code.getMessage();
   }
-
 
   public ResponseDto(String code, String message) {
     this.success = false;
@@ -38,7 +36,6 @@ public class ResponseDto<T> {
     this.success = false;
     this.message = message;
   }
-
 
   public ResponseDto(ApiException ex) {
     this.success = false;
