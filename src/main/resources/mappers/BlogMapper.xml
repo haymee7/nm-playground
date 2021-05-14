@@ -22,15 +22,19 @@
     FROM playground.blog
     WHERE b.pid = #{pid}
   </select>
-    <select id="retrieve" parameterType="int" resultType="BlogDto">
-        SELECT title,
-               post,
-               writer,
-               pid,
-               created_at
-        FROM playground.blog
-                 LIMIT #{sp}, #{cnt}
-    </select>
+  <select id="retrieve" parameterType="BlogsReqDto" resultType="BlogDto">
+    SELECT title,
+           post,
+           writer,
+           pid,
+           created_at
+    FROM playground.blog LIMIT #{sp}, #{cnt}
+  </select>
+
+  <select id="totalCnt" resultType="int">
+    SELECT COUNT(*)
+    FROM playground.blog
+  </select>
 
   <update id="refresh" parameterType="BlogDto">
     UPDATE playground.blog

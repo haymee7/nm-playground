@@ -2,16 +2,13 @@ package kr.co.zzimcar.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import kr.co.zzimcar.dto.BlogReqDto;
-import kr.co.zzimcar.dto.BlogResDto;
-import kr.co.zzimcar.dto.ResponseDto;
+import kr.co.zzimcar.dto.*;
 import kr.co.zzimcar.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/blog")
@@ -33,14 +30,24 @@ public class BlogController {
     return blogService.retrieveOne(pid);
   }
 
-  @GetMapping("blogs/{sp},{cnt}")
+
+  @PostMapping("/blogs")
   @ApiOperation("포스트 통합조회 API")
-  public ResponseEntity<ResponseDto<List<BlogResDto>>> retrieve(@PathVariable int sp, @PathVariable int cnt) {
-    return blogService.retrieve(sp, cnt);
+  public ResponseEntity<ResponseDto<DataDto>> retrieve(@RequestBody BlogsReqDto blogsReqDto) {
+    return blogService.retrieve(blogsReqDto);
   }
+
 
   @PutMapping("/{pid}")
   public ResponseEntity<ResponseDto<BlogReqDto>> revice(@PathVariable int pid, @RequestBody BlogReqDto blogReqDto) {
     return blogService.revice(pid, blogReqDto);
   }
+
+
 }
+
+//  @GetMapping("blogs/{sp},{cnt}")
+//  @ApiOperation("포스트 통합조회 API")
+//  public ResponseEntity<ResponseDto<DataDto>> retrieve(@PathVariable int sp, @PathVariable int cnt) {
+//    return blogService.retrieve(sp, cnt);
+//  }
