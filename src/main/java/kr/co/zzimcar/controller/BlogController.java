@@ -3,6 +3,7 @@ package kr.co.zzimcar.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kr.co.zzimcar.dto.BlogReqDto;
+import kr.co.zzimcar.dto.BlogResByCntDto;
 import kr.co.zzimcar.dto.BlogResDto;
 import kr.co.zzimcar.dto.ResponseDto;
 import kr.co.zzimcar.service.BlogService;
@@ -28,8 +29,14 @@ public class BlogController {
 
   @GetMapping("/{pid}")
   @ApiOperation("포스트 조회 API")
-  public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(@PathVariable int pid) {
+  public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(@PathVariable @Valid int pid) {
     return blogService.retrieveOne(pid);
+  }
+
+  @PostMapping("/{sp}/{cnt}")
+  @ApiOperation("포스트 목록 API")
+  public ResponseEntity<ResponseDto<BlogResByCntDto>> retrieveByCnt(@PathVariable @Valid int sp, @PathVariable @Valid int cnt) {
+    return blogService.retrieveByCnt(sp, cnt);
   }
 
 }

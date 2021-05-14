@@ -3,6 +3,7 @@ package kr.co.zzimcar.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,4 +23,5 @@ public class BlogDto {
     this.post = blogReqDto.getPost();
     this.writer = blogReqDto.getWriter();
   }
+
 }

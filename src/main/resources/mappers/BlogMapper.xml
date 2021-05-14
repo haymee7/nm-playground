@@ -18,4 +18,20 @@
     WHERE
       b.pid = #{pid}
   </select>
+
+  <select id="retrieveByCnt" parameterType="int" resultType="BlogDto">
+    SELECT
+      b.title, b.post, b.writer, b.pid, b.created_at
+    FROM
+      playground.blog b
+    LIMIT
+      #{sp}, #{cnt}
+  </select>
+
+  <select id="totalCnt" resultType="int">
+    SELECT
+      count(*)
+    FROM
+      playground.blog b
+  </select>
 </mapper>

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -16,7 +18,6 @@ public class ResponseDto<T> {
   private String code;
   private String message;
   private T data;
-
 
   public ResponseDto(boolean success) {
     this.success = success;
