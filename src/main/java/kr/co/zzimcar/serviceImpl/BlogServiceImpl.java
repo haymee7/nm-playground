@@ -53,13 +53,13 @@ public class BlogServiceImpl implements BlogService {
 
 
   @Override
-  public ResponseEntity<ResponseDto<DataDto>> retrieve(BlogsReqDto blogsReqDto) {
+  public ResponseEntity<ResponseDto<BlogDataDto>> retrieve(BlogsReqDto blogsReqDto) {
     try {
       List<BlogDto> blogDto = blogDao.retrieve(blogsReqDto);
       int totalCnt = blogDao.totalCnt();
-      DataDto dataDto = new DataDto(blogDto, totalCnt);
+      BlogDataDto dataDto = new BlogDataDto(blogDto, totalCnt);
 
-      ResponseDto<DataDto> responseDto = new ResponseDto<>(true);
+      ResponseDto<BlogDataDto> responseDto = new ResponseDto<>(true);
       responseDto.setData(dataDto);
 
       return ResponseEntity.ok(responseDto);

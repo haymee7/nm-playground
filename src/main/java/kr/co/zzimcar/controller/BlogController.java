@@ -33,12 +33,13 @@ public class BlogController {
 
   @PostMapping("/blogs")
   @ApiOperation("포스트 통합조회 API")
-  public ResponseEntity<ResponseDto<DataDto>> retrieve(@RequestBody BlogsReqDto blogsReqDto) {
+  public ResponseEntity<ResponseDto<BlogDataDto>> retrieve(@RequestBody BlogsReqDto blogsReqDto) {
     return blogService.retrieve(blogsReqDto);
   }
 
 
   @PutMapping("/{pid}")
+  @ApiOperation("포스트 수정 API")
   public ResponseEntity<ResponseDto<BlogReqDto>> revice(@PathVariable int pid, @RequestBody BlogReqDto blogReqDto) {
     return blogService.revice(pid, blogReqDto);
   }

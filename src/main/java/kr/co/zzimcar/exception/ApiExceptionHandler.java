@@ -42,7 +42,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
     String error = "Malformed JSON request";
     return buildResponseEntity(new ResponseDto<>("요청 JSON 포맷 오류"));
-  }
+  }  //json형태가 아닐떄 나옴 ..  "post": "string", "title": "string", ,로 끝나면 json형태가 아니니까 오류 발생
 
   @ExceptionHandler(ApiException.class)  //ApiException으로 들어오느 에러 제어
   protected ResponseEntity<Object> handleIntApiException(ApiException ex) {

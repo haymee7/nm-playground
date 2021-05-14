@@ -9,7 +9,7 @@ public interface BlogService {
 
   ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(int pid);
 
-  ResponseEntity<ResponseDto<DataDto>> retrieve(BlogsReqDto blogsReqDto);
+  ResponseEntity<ResponseDto<BlogDataDto>> retrieve(BlogsReqDto blogsReqDto);
 
   ResponseEntity<ResponseDto<BlogReqDto>> revice(int pid, BlogReqDto blogReqDto);
 
