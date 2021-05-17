@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.zzimcar.dao.BookDao">
+  <insert id="save" parameterType="BookDto">
+    INSERT playground.book_yjh (
+      writer, publisher, publish_date, price, title
+    ) VALUES (
+      #{writer}, #{publisher}, #{publishDate}, #{price}, #{title}
+    )
+  </insert>
+
+  <select id="retrieveOne" parameterType="int" resultType="BookDto">
+    SELECT
+      b.writer, b.publisher, b.publish_date, b.price, b.title, b.created_at
+    FROM
+      playground.book_yjh b
+    WHERE
+      b.pid = #{pid}
+  </select>
+
+  <select id="retrieveByCnt" resultType="BookDto">
+    SELECT
+      b.pid, b.writer, b.publisher, b.publish_date, b.price, b.title, b.created_at , b.updated_at, b.deleted_at
+    FROM
+      playground.book_yjh b
+    ORDER BY
+      pid ${sort}
+    LIMIT
+      #{sp}, #{cnt};
+  </select>
+
+  <select id="totalCnt" resultType="int">
+    SELECT
+      count(*)
+    FROM
+      playground.book_yjh
+  </select>
+
+</mapper>

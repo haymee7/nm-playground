@@ -1,5 +1,6 @@
 package kr.co.zzimcar.dto;
 
+import io.swagger.annotations.*;
 import kr.co.zzimcar.enumeration.ResponseCode;
 import kr.co.zzimcar.exception.ApiException;
 import lombok.Getter;
@@ -13,10 +14,15 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
+@ApiModel(description = "API 통신 결과")
 public class ResponseDto<T> {
+  @ApiModelProperty(value = "API 통신 성공유무")
   private boolean success;
+  @ApiModelProperty(value = "API 통신 CODE")
   private String code;
+  @ApiModelProperty(value = "API 통신 메시지")
   private String message;
+  @ApiModelProperty(value = "API 데이터")
   private T data;
 
   public ResponseDto(boolean success) {

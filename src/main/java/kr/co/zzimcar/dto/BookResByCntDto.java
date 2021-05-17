@@ -9,13 +9,13 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class BlogResByCntDto {
+public class BookResByCntDto {
 
   private int totalCnt;
-  private List<BlogDto> list;
+  private List<BookDto> list;
 
-  public BlogResByCntDto(int totalCnt, List<BlogDto> blogDto) {
+  public BookResByCntDto(int totalCnt, List<BookDto> list) {
     this.totalCnt = totalCnt;
-    this.list = blogDto;
+    this.list = list;
   }
 }

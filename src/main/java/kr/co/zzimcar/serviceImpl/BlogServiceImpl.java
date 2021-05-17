@@ -47,7 +47,7 @@ public class BlogServiceImpl implements BlogService {
 
       return ResponseEntity.ok(responseDto);
     } catch (Exception e){
-      log.info("-- 블로그 정보 불러오기 실패", e);
+      log.info("-- 블로그 목록 불러오기 실패", e);
       throw new ApiException(BLOG_LIST_FAILED);
     }
   }
