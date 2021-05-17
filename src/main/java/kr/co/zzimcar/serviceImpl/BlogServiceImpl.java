@@ -24,8 +24,7 @@ public class BlogServiceImpl implements BlogService {
   @Override
   public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(int pid) {
     try {
-      BlogDto blogDto = blogDao.retrieveOne(pid);
-      BlogResDto blogResDto = new BlogResDto(blogDto);
+      BlogResDto blogResDto = new BlogResDto(blogDao.retrieveOne(pid));
       ResponseDto<BlogResDto> responseDto = new ResponseDto<>(true);
       responseDto.setData(blogResDto);
 
@@ -39,9 +38,7 @@ public class BlogServiceImpl implements BlogService {
   @Override
   public ResponseEntity<ResponseDto<BlogResByCntDto>> retrieveByCnt(int sp, int cnt) {
     try {
-      List<BlogDto> blogDto = blogDao.retrieveByCnt(sp, cnt);
-      int totalCnt = blogDao.totalCnt();
-      BlogResByCntDto blogResByCntDto = new BlogResByCntDto(totalCnt, blogDto);
+      BlogResByCntDto blogResByCntDto = new BlogResByCntDto(blogDao.totalCnt(), blogDao.retrieveByCnt(sp, cnt));
       ResponseDto<BlogResByCntDto> responseDto = new ResponseDto<>(true);
       responseDto.setData(blogResByCntDto);
 

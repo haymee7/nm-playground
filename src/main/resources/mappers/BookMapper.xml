@@ -12,7 +12,7 @@
 
   <select id="retrieveOne" parameterType="int" resultType="BookDto">
     SELECT
-      b.writer, b.publisher, b.publish_date, b.price, b.title, b.created_at
+      b.pid, b.writer, b.publisher, b.publish_date, b.price, b.title, b.created_at
     FROM
       playground.book_yjh b
     WHERE
