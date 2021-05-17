@@ -38,5 +38,4 @@ public class BlogController {
                                                                     @PathVariable @ApiParam(value = "불러올갯수", required = true, example = "5") int cnt) {
     return blogService.retrieveByCnt(sp, cnt);
   }
-
 }

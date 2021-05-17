@@ -50,9 +50,7 @@ public class BookServiceImpl implements BookService {
   @Override
   public ResponseEntity<ResponseDto<BookResByCntDto>> retrieveByCnt(int sp, int cnt, String sort) {
     try {
-      System.out.println("------ 2 -------");
-      sort = sort != "n" ? "DESC" : "ASC";
-      System.out.println("------ 3 -------");
+      sort = sort.equals("n") ? "DESC" : "ASC";
       List<BookDto> bookDto = bookDao.retrieveByCnt(sp, cnt, sort);
       int totalCnt = bookDao.totalCnt();
       BookResByCntDto bookResByCntDto = new BookResByCntDto(totalCnt, bookDto);
