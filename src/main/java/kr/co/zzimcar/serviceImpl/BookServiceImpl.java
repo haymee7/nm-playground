@@ -35,9 +35,8 @@ public class BookServiceImpl implements BookService {
   @Override
   public ResponseEntity<ResponseDto<BookResDto>> retrieveOne(int pid) {
     try {
-      BookResDto bookResDto = new BookResDto(bookDao.retrieveOne(pid));
       ResponseDto<BookResDto> responseDto = new ResponseDto<>(true);
-      responseDto.setData(bookResDto);
+      responseDto.setData(new BookResDto(bookDao.retrieveOne(pid)));
 
       return ResponseEntity.ok(responseDto);
     } catch (Exception e) {
@@ -49,10 +48,8 @@ public class BookServiceImpl implements BookService {
   @Override
   public ResponseEntity<ResponseDto<BookResByCntDto>> retrieveByCnt(int sp, int cnt, String sort) {
     try {
-      sort = sort.equals("n") ? "DESC" : "ASC";
-      BookResByCntDto bookResByCntDto = new BookResByCntDto(bookDao.totalCnt(), bookDao.retrieveByCnt(sp, cnt, sort));
       ResponseDto<BookResByCntDto> responseDto = new ResponseDto<>(true);
-      responseDto.setData(bookResByCntDto);
+      responseDto.setData(new BookResByCntDto(bookDao.totalCnt(), bookDao.retrieveByCnt(sp, cnt, sort.equals("n") ? "DESC" : "ASC")));
 
       return ResponseEntity.ok(responseDto);
     } catch (Exception e) {

@@ -34,7 +34,7 @@ public class BookController {
 
   @PostMapping("/{sp}/{cnt}/{order}")
   @ApiOperation("책 목록 불러오기")
-  public ResponseEntity<ResponseDto<BookResByCntDto>> retrieveByCnt(@PathVariable @ApiParam(value = "시작 번호", required = true, example = "1") int sp,
+  public ResponseEntity<ResponseDto<BookResByCntDto>> retrieveByCnt(@PathVariable @ApiParam(value = "시작 인덱스", required = true, example = "1") int sp,
                                                                     @PathVariable @ApiParam(value = "불러올 글 갯수", required = true, example = "5") int cnt,
                                                                     @RequestParam @ApiParam(value = "정렬 순서(최신순 = n, 오래된순 = o)", required = true, example = "n") String sort) {
     return bookService.retrieveByCnt(sp, cnt, sort);
