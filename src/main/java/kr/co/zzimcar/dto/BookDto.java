@@ -1,9 +1,6 @@
 package kr.co.zzimcar.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -28,5 +25,13 @@ public class BookDto {
     this.publishDate = bookReqDto.getPublishDate();
     this.price = bookReqDto.getPrice();
     this.title = bookReqDto.getTitle();
+  }
+
+  public BookDto(BookDto bookDto) {
+    this.writer = bookDto.getWriter();
+    this.publisher = bookDto.getPublisher();
+    this.publishDate = bookDto.getPublishDate();
+    this.price = bookDto.getPrice();
+    this.title = bookDto.getTitle();
   }
 }

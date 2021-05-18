@@ -3,10 +3,7 @@ package kr.co.zzimcar.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import kr.co.zzimcar.dto.BookReqDto;
-import kr.co.zzimcar.dto.BookResByCntDto;
-import kr.co.zzimcar.dto.BookResDto;
-import kr.co.zzimcar.dto.ResponseDto;
+import kr.co.zzimcar.dto.*;
 import kr.co.zzimcar.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +25,7 @@ public class BookController {
 
   @GetMapping("/{pid}")
   @ApiOperation("책 조회 API")
-  public ResponseEntity<ResponseDto<BookResDto>> retrieveOne(@PathVariable @ApiParam(value = "책 번호", required = true, example = "1") int pid) {
+  public ResponseEntity<ResponseDto<BookDto>> retrieveOne(@PathVariable @ApiParam(value = "책 번호", required = true, example = "1") int pid) {
     return bookService.retrieveOne(pid);
   }
 

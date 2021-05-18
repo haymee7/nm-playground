@@ -33,10 +33,13 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public ResponseEntity<ResponseDto<BookResDto>> retrieveOne(int pid) {
+  public ResponseEntity<ResponseDto<BookDto>> retrieveOne(int pid) {
     try {
-      ResponseDto<BookResDto> responseDto = new ResponseDto<>(true);
-      responseDto.setData(new BookResDto(bookDao.retrieveOne(pid)));
+//      ResponseDto<BookResDto> responseDto = new ResponseDto<>(true);
+//      responseDto.setData(new BookResDto(bookDao.retrieveOne(pid)));
+      // 이거 꼭 물어보기
+      ResponseDto<BookDto> responseDto = new ResponseDto<>(true);
+      responseDto.setData(new BookDto(bookDao.retrieveOne(pid)));
 
       return ResponseEntity.ok(responseDto);
     } catch (Exception e) {
