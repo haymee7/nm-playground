@@ -7,4 +7,5 @@ public interface BookService {
   ResponseEntity<ResponseDto<Void>> create(BookReqDto bookReqDto);
   ResponseEntity<ResponseDto<BookResDto>> retrieveOne(int pid);
   ResponseEntity<ResponseDto<BookDataDto>> retrieve(BooksReqDto booksReqDto);
+  ResponseEntity<ResponseDto<BookReqDto>> revice(int pid, BookReqDto bookReqDto);
 }

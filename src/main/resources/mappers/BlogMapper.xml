@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.zzimcar.dao.BlogDao">
-  <insert id="save" parameterType="BlogDto">
-    INSERT
-    playground.blog (
+    <insert id="save" parameterType="BlogDto">
+        INSERT
+        playground.blog (
       title, post, writer
     ) VALUES (
-    #{title},
-    #{post},
-    #{writer}
-    )
-  </insert>
+        #{title},
+        #{post},
+        #{writer}
+        )
+    </insert>
 
-  <select id="retrieveOne" parameterType="int" resultType="BlogDto">
-    SELECT title,
-           post,
-           writer,
-           pid,
-           created_at
-    FROM playground.blog
-    WHERE b.pid = #{pid}
-  </select>
-  <select id="retrieve" parameterType="BlogsReqDto" resultType="BlogDto">
-    SELECT title,
-           post,
-           writer,
-           pid,
-           created_at
-    FROM playground.blog LIMIT #{sp}, #{cnt}
-  </select>
+    <select id="retrieveOne" parameterType="int" resultType="BlogDto">
+        SELECT title,
+               post,
+               writer,
+               pid,
+               created_at
+        FROM playground.blog
+        WHERE b.pid = #{pid}
+    </select>
+    <select id="retrieve" parameterType="BlogsReqDto" resultType="BlogDto">
+        SELECT title,
+               post,
+               writer,
+               pid,
+               created_at
+        FROM playground.blog LIMIT #{sp}, #{cnt}
+    </select>
 
-  <select id="totalCnt" resultType="int">
-    SELECT COUNT(*)
-    FROM playground.blog
-  </select>
+    <select id="totalCnt" resultType="int">
+        SELECT COUNT(*)
+        FROM playground.blog
+    </select>
 
-  <update id="refresh" parameterType="BlogDto">
-    UPDATE playground.blog
-    SET TITLE  = #{title},
-        POST   = #{post},
-        WRITER = #{writer}
-    WHERE PID = #{pid}
-  </update>
+    <update id="revice" parameterType="BlogDto">
+        UPDATE playground.blog
+        SET TITLE  = #{title},
+            POST   = #{post},
+            WRITER = #{writer}
+        WHERE PID = #{pid}
+    </update>
 </mapper>

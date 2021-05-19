@@ -27,6 +27,14 @@ public class BookDto {
     this.publication_date = bookReqDto.getPublication_date();
     this.price = bookReqDto.getPrice();
     this.title = bookReqDto.getTitle();
+  }
 
+  public BookDto(int pid, BookReqDto bookReqDto){
+    this.pid = pid;
+    this.author = bookReqDto.getAuthor();
+    this.publisher = bookReqDto.getPublisher();
+    this.publication_date = bookReqDto.getPublication_date();
+    this.price = bookReqDto.getPrice();
+    this.title = bookReqDto.getTitle();
   }
 }

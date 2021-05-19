@@ -35,4 +35,11 @@ public class BookController {
   public ResponseEntity<ResponseDto<BookDataDto>> retrieve(@RequestBody BooksReqDto booksReqDto){
     return bookService.retrieve(booksReqDto);
   }
+
+  @PutMapping("/{pid}")
+  @ApiOperation("put 책 정보 수정하기 API")
+  public ResponseEntity<ResponseDto<BookReqDto>> revice(@PathVariable int pid, @RequestBody BookReqDto bookReqDto){
+    return bookService.revice(pid, bookReqDto);
+  }
+
 }

@@ -15,5 +15,6 @@ public interface BookDao {
   BookDto retrieveOne(int pid);
   List<BookDto> retrieve(BooksReqDto booksReqDto);
   int totalCnt();
+  int revice(BookDto bookDto);
 
 }

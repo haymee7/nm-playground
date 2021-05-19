@@ -73,7 +73,7 @@ public class BlogServiceImpl implements BlogService {
   @Override
   public ResponseEntity<ResponseDto<BlogReqDto>> revice(int pid, BlogReqDto blogReqDto) {
     try {
-      blogDao.refresh(new BlogDto(pid, blogReqDto));
+      blogDao.revice(new BlogDto(pid, blogReqDto));
       return ResponseEntity.ok(new ResponseDto<>(true));
     } catch (Exception e) {
       log.info("-- 블로그 수정 실패", e);

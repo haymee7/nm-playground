@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface BlogDao {
+
   int save(BlogDto blogDto);
 
   BlogDto retrieveOne(int pid);
@@ -18,7 +19,7 @@ public interface BlogDao {
 
   int totalCnt();
 
-  int refresh(BlogDto blogDto);
+  int revice(BlogDto blogDto);
 
 }
 //  List<BlogDto> retrieve(int sp, int cnt);

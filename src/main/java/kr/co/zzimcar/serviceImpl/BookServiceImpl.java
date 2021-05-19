@@ -1,5 +1,6 @@
 package kr.co.zzimcar.serviceImpl;
 
+import kr.co.zzimcar.dao.BlogDao;
 import kr.co.zzimcar.dao.BookDao;
 import kr.co.zzimcar.dto.*;
 import kr.co.zzimcar.exception.ApiException;
@@ -61,4 +62,15 @@ public class BookServiceImpl implements BookService {
 
     }
   }
+
+  @Override
+  public ResponseEntity<ResponseDto<BookReqDto>> revice(int pid, BookReqDto bookReqDto) {
+    try{
+    bookDao.revice(new BookDto(pid, bookReqDto));
+    return ResponseEntity.ok(new ResponseDto<>(true));
+  }catch (Exception e) {
+      log.info(" --책 정보 수정 실패");
+      throw new ApiException(BOOK_REVICE_FAILED);
+    }
+    }
 }
