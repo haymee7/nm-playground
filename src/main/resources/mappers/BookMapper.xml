@@ -33,7 +33,7 @@
                title
         FROM playground.books_lhw
         ORDER BY pid ${order}
-LIMIT #{sp}, #{cnt}
+        LIMIT #{sp}, #{cnt}
     </select>
 
     <select id="totalCnt" resultType="int">
@@ -51,5 +51,8 @@ LIMIT #{sp}, #{cnt}
         WHERE PID = #{pid}
     </update>
 
-
 </mapper>
+
+<!--#{} , ${}의 차이
+#{}는 파라미터가 String 형태로 들어와 그대로 사용  WHERE pid = #{pid}는  WHERE pid = ? 값이 달라져도 같은 쿼리로 인식
+${}는 해당 컬럼의 자료형에 맞추어 파라미터의 자료형이 변경 사용자의 입력을 전달할 때는 사용하지 않는편이 좋음 WHERE pid = #{pid}는  WHERE pid = 2 값이 들어와 버림-->
