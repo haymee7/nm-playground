@@ -9,26 +9,26 @@ import java.time.LocalDateTime;
 @ToString
 @RequiredArgsConstructor
 public class BlogDto {
-  private int pid;
-  private String title;
-  private String post;
-  private String writer;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-  private LocalDateTime deletedAt;
+    private int pid;
+    private String title;
+    private String post;
+    private String writer;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
-  public BlogDto(BlogReqDto blogReqDto) {
-    this.title = blogReqDto.getTitle();
-    this.post = blogReqDto.getPost();
-    this.writer = blogReqDto.getWriter();
-  }
+    public BlogDto(BlogReqDto blogReqDto) {
+        this.title = blogReqDto.getTitle();
+        this.post = blogReqDto.getPost();
+        this.writer = blogReqDto.getWriter();
+    }
 
-  public BlogDto(int pid, BlogReqDto blogReqDto) {
-    this.pid = pid;
-    this.title = blogReqDto.getTitle();
-    this.post = blogReqDto.getPost();
-    this.writer = blogReqDto.getWriter();
+    public BlogDto(int pid, BlogReqDto blogReqDto) {
+        this.pid = pid;
+        this.title = blogReqDto.getTitle();
+        this.post = blogReqDto.getPost();
+        this.writer = blogReqDto.getWriter();
 
-  }
+    }
 
 }

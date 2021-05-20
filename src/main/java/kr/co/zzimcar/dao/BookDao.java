@@ -12,10 +12,14 @@ import java.util.List;
 @Repository
 @Mapper
 public interface BookDao {
-  int upload(BookDto bookDto);
-  BookDto retrieveOne(int pid);
-  List<BookResDto> retrieve(BooksReqDto booksReqDto);
-  int totalCnt();
-  int revice(BookDto bookDto);
+    int upload(BookDto bookDto);
+
+    BookDto retrieveOne(int pid);
+
+    List<BookResDto> retrieve(BooksReqDto booksReqDto);
+
+    int totalCnt();
+
+    int revice(BookDto bookDto);
 
 }

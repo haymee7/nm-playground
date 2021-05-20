@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 
 
 public interface BlogService {
-  ResponseEntity<ResponseDto<Void>> create(BlogReqDto blogReqDto);
+    ResponseEntity<ResponseDto<Void>> create(BlogReqDto blogReqDto);
 
-  ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(int pid);
+    ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(int pid);
 
-  ResponseEntity<ResponseDto<BlogDataDto>> retrieve(BlogsReqDto blogsReqDto);
+    ResponseEntity<ResponseDto<BlogDataDto>> retrieve(BlogsReqDto blogsReqDto);
 
-  ResponseEntity<ResponseDto<BlogReqDto>> revice(int pid, BlogReqDto blogReqDto);
+    ResponseEntity<ResponseDto<BlogReqDto>> revice(int pid, BlogReqDto blogReqDto);
 
 }
 

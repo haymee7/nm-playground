@@ -11,15 +11,15 @@ import java.util.List;
 @Mapper
 public interface BlogDao {
 
-  int save(BlogDto blogDto);
+    int save(BlogDto blogDto);
 
-  BlogDto retrieveOne(int pid);
+    BlogDto retrieveOne(int pid);
 
-  List<BlogDto> retrieve(BlogsReqDto blogsReqDto);
+    List<BlogDto> retrieve(BlogsReqDto blogsReqDto);
 
-  int totalCnt();
+    int totalCnt();
 
-  int revice(BlogDto blogDto);
+    int revice(BlogDto blogDto);
 
 }
 //  List<BlogDto> retrieve(int sp, int cnt);

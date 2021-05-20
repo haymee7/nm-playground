@@ -17,36 +17,37 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-  private ResponseEntity<Object> buildResponseEntity(ResponseDto<Void> responseDto) {
-    return ResponseEntity.ok(responseDto);
-  }
+    private ResponseEntity<Object> buildResponseEntity(ResponseDto<Void> responseDto) {
+        return ResponseEntity.ok(responseDto);
+    }
 
-  @Override
-  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
-                                                                WebRequest request) {
-    ResponseDto<Void> responseDto = new ResponseDto<Void>(false);
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
+                                                                  WebRequest request) {
+        ResponseDto<Void> responseDto = new ResponseDto<Void>(false);
 
-    String message = !ex.getBindingResult().getFieldErrors().isEmpty() ?
-      "[" + ex.getBindingResult().getFieldErrors().get(0).getField() + "]" + ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage() :
-      !ex.getBindingResult().getGlobalErrors().isEmpty() ?
-        "[" + ex.getBindingResult().getGlobalErrors().get(0).getObjectName() + "]" + ex.getBindingResult().getGlobalErrors().get(0).getDefaultMessage()
-        : "데이터 형식 오류";
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            String message = !ex.getBindingResult().getFieldErrors().isEmpty() ?
+                    "[" + ex.getBindingResult().getFieldErrors().get(i).getField() + "]" + ex.getBindingResult().getFieldErrors().get(i).getDefaultMessage() :
+                    !ex.getBindingResult().getGlobalErrors().isEmpty() ?
+                            "[" + ex.getBindingResult().getGlobalErrors().get(0).getObjectName() + "]" + ex.getBindingResult().getGlobalErrors().get(0).getDefaultMessage()
+                            : "데이터 형식 오류";
+            responseDto.setMessage(message.concat("[" + ex.getBindingResult().getFieldErrors().get(i).getField() + "]" + ex.getBindingResult().getFieldErrors().get(i).getDefaultMessage()));
+        }
 
-    responseDto.setMessage(message);
 
+        return buildResponseEntity(responseDto);
+    }
 
-    return buildResponseEntity(responseDto);
-  }
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String error = "Malformed JSON request";
+        return buildResponseEntity(new ResponseDto<>("요청 JSON 포맷 오류"));
+    }  //json형태가 아닐떄 나옴 ..  "post": "string", "title": "string", ,로 끝나면 json형태가 아니니까 오류 발생
 
-  @Override
-  protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-    String error = "Malformed JSON request";
-    return buildResponseEntity(new ResponseDto<>("요청 JSON 포맷 오류"));
-  }  //json형태가 아닐떄 나옴 ..  "post": "string", "title": "string", ,로 끝나면 json형태가 아니니까 오류 발생
-
-  @ExceptionHandler(ApiException.class)  //ApiException으로 들어오느 에러 제어
-  protected ResponseEntity<Object> handleIntApiException(ApiException ex) {
-    return buildResponseEntity(new ResponseDto(ex));  // buildResponseEntity는
-                                                      // 새로운 ResponseDto를 만들고 ex를 담아서 보냄
-  }
+    @ExceptionHandler(ApiException.class)  //ApiException으로 들어오느 에러 제어
+    protected ResponseEntity<Object> handleIntApiException(ApiException ex) {
+        return buildResponseEntity(new ResponseDto(ex));  // buildResponseEntity는
+        // 새로운 ResponseDto를 만들고 ex를 담아서 보냄
+    }
 }

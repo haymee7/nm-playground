@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 public class BlogReqDto {
-  @NotNull(message = "제목을 입력해주세요")
-  private String title;
-  @NotNull(message = "내용을 입력해주세요")
-  private String post;
-  @NotNull(message = "작성자를 입력해주세요")
-  private String writer;
+    @NotNull(message = "제목을 입력해주세요")
+    private String title;
+    @NotNull(message = "내용을 입력해주세요")
+    private String post;
+    @NotNull(message = "작성자를 입력해주세요")
+    private String writer;
 }

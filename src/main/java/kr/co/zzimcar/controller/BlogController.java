@@ -20,33 +20,33 @@ import javax.validation.Valid;
 @Api(tags = "블로그 API")
 public class BlogController {
 
-  private final BlogService blogService;
+    private final BlogService blogService;
 
-  @PostMapping("")
-  @ApiOperation("포스트 작성 API")
-  public ResponseEntity<ResponseDto<Void>> create(@RequestBody @Valid BlogReqDto blogReqDto) {
-    return blogService.create(blogReqDto);
-  }
+    @PostMapping("")
+    @ApiOperation("포스트 작성 API")
+    public ResponseEntity<ResponseDto<Void>> create(@RequestBody @Valid BlogReqDto blogReqDto) {
+        return blogService.create(blogReqDto);
+    }
 
-  @GetMapping("/{pid}")
-  @ApiOperation("포스트 조회 API")
-  public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(@PathVariable int pid) {
-    return blogService.retrieveOne(pid);
-  }
-
-
-  @PostMapping("/blogs")
-  @ApiOperation("포스트 통합조회 API")
-  public ResponseEntity<ResponseDto<BlogDataDto>> retrieve(@RequestBody BlogsReqDto blogsReqDto) {
-    return blogService.retrieve(blogsReqDto);
-  }
+    @GetMapping("/{pid}")
+    @ApiOperation("포스트 조회 API")
+    public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(@PathVariable int pid) {
+        return blogService.retrieveOne(pid);
+    }
 
 
-  @PutMapping("/{pid}")
-  @ApiOperation("포스트 수정 API")
-  public ResponseEntity<ResponseDto<BlogReqDto>> revice(@PathVariable int pid, @RequestBody BlogReqDto blogReqDto) {
-    return blogService.revice(pid, blogReqDto);
-  }
+    @PostMapping("/blogs")
+    @ApiOperation("포스트 통합조회 API")
+    public ResponseEntity<ResponseDto<BlogDataDto>> retrieve(@RequestBody BlogsReqDto blogsReqDto) {
+        return blogService.retrieve(blogsReqDto);
+    }
+
+
+    @PutMapping("/{pid}")
+    @ApiOperation("포스트 수정 API")
+    public ResponseEntity<ResponseDto<BlogReqDto>> revice(@PathVariable int pid, @RequestBody BlogReqDto blogReqDto) {
+        return blogService.revice(pid, blogReqDto);
+    }
 
 
 }
