@@ -2,6 +2,7 @@ package kr.co.zzimcar.serviceImpl;
 
 import kr.co.zzimcar.dao.BlogDao;
 import kr.co.zzimcar.dto.*;
+import kr.co.zzimcar.dto.blog.*;
 import kr.co.zzimcar.exception.ApiException;
 import kr.co.zzimcar.service.BlogService;
 import lombok.RequiredArgsConstructor;

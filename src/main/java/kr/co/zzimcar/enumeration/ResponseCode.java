@@ -14,7 +14,9 @@ public enum ResponseCode {
   BOOK_UPLOAD_FAILED("BOOK_0001", "책 업로드 실패"),
   BOOK_RETRIEVEONE_FAILED("BOOK_0002","책 정보불러오기 실패"),
   BOOK_RETRIEVE_FAILED("BOOK_0003","책 정보 순서로 불러오기 실패"),
-  BOOK_REVICE_FAILED("BOOK_0004","책 정보 수정 실패");
+  BOOK_RETRIEVEONE_NULL("BOOK_0004","책정보 데이터(RETRIEVEONE) null"),
+  BOOK_RETRIEVE_NULL("BOOK_0005","책정보 데이터(RETRIEVE) null"),
+  BOOK_REVICE_FAILED("BOOK_0006","책 정보 수정 실패");
 
 
 

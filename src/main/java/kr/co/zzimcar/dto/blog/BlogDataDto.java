@@ -1,4 +1,4 @@
-package kr.co.zzimcar.dto;
+package kr.co.zzimcar.dto.blog;
 
 import lombok.Data;
 

@@ -20,7 +20,7 @@
                pid,
                created_at
         FROM playground.blog
-        WHERE b.pid = #{pid}
+        WHERE pid = #{pid}
     </select>
     <select id="retrieve" parameterType="BlogsReqDto" resultType="BlogDto">
         SELECT title,

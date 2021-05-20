@@ -3,6 +3,10 @@ package kr.co.zzimcar.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kr.co.zzimcar.dto.*;
+import kr.co.zzimcar.dto.book.BookDataDto;
+import kr.co.zzimcar.dto.book.BookReqDto;
+import kr.co.zzimcar.dto.book.BookResDto;
+import kr.co.zzimcar.dto.book.BooksReqDto;
 import kr.co.zzimcar.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +34,9 @@ public class BookController {
     return bookService.retrieveOne(pid);
   }
 
-  @PostMapping("/books")
+  @PostMapping("/list")
   @ApiOperation("POST 책 정보불러오기 API")
-  public ResponseEntity<ResponseDto<BookDataDto>> retrieve(@RequestBody BooksReqDto booksReqDto){
+  public ResponseEntity<ResponseDto<BookDataDto>> retrieve(@RequestBody @Valid BooksReqDto booksReqDto){
     return bookService.retrieve(booksReqDto);
   }
 

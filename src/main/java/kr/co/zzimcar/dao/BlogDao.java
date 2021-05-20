@@ -1,7 +1,7 @@
 package kr.co.zzimcar.dao;
 
-import kr.co.zzimcar.dto.BlogDto;
-import kr.co.zzimcar.dto.BlogsReqDto;
+import kr.co.zzimcar.dto.blog.BlogDto;
+import kr.co.zzimcar.dto.blog.BlogsReqDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

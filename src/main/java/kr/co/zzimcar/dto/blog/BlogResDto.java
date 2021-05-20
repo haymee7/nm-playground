@@ -1,11 +1,10 @@
-package kr.co.zzimcar.dto;
+package kr.co.zzimcar.dto.blog;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,7 +17,6 @@ public class BlogResDto {
   private LocalDateTime createdAt;
 
   public BlogResDto(BlogDto blogDto) {
-    this.pid = blogDto.getPid();
     this.post = blogDto.getPost();
     this.writer = blogDto.getWriter();
     this.title = blogDto.getTitle();

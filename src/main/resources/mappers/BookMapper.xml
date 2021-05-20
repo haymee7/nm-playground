@@ -1,58 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.zzimcar.dao.BookDao">
-    <insert id="save" parameterType="BookDto">
-        INSERT
-        playground.books_lhw(
- AUTHOR, PUBLISHER, PUBLICATION_DATE, PRICE, TITLE
-    ) VALUES (
-        #{author},
-        #{publisher},
-        #{publication_date},
-        #{price},
-        #{title},
-        )
-    </insert>
+  <insert id="upload" parameterType="BookDto">
+    INSERT
+    playground.book_lhw
+       (
+              author,
+              publisher,
+              publication_at,
+              price,
+              title
+       )
+       VALUES
+       (
+    #{author},
+    #{publisher},
+    #{publication_at},
+    #{price},
+    #{title}
+    )
+  </insert>
 
-    <select id="retrieveOne" parameterType="int" resultType="BookDto">
-        SELECT author,
-               publisher,
-               publication_date,
-               price,
-               title
-        FROM playground.books_lhw
-        WHERE pid = #{pid}
-    </select>
+  <select id="retrieveOne" parameterType="int" resultType="BookDto">
+    SELECT author,
+           publisher,
+           publication_at,
+           price,
+           title
+    FROM playground.book_lhw
+    WHERE deleted_at IS NULL
+      AND pid = #{pid}
+  </select>
 
-    <select id="retrieve" parameterType="BooksReqDto" resultType="BookDto">
-        SELECT author,
-               publisher,
-               publication_date,
-               price,
-               title
-        FROM playground.books_lhw
-        ORDER BY pid ${order}
+  <select id="retrieve" parameterType="BooksReqDto" resultType="BookResDto">
+    SELECT author,
+           publisher,
+           publication_at,
+           price,
+           title,
+           created_at
+    FROM playground.book_lhw
+    WHERE deleted_at IS NULL
+    ORDER BY pid ${order}
         LIMIT #{sp}, #{cnt}
-    </select>
+  </select>
 
-    <select id="totalCnt" resultType="int">
-        SELECT COUNT(*)
-        FROM playground.books_lhw
-    </select>
+  <select id="totalCnt" resultType="int">
+    SELECT COUNT(*)
+    FROM playground.book_lhw
+    WHERE deleted_at IS NULL
 
-    <update id="revice" parameterType="BookDto">
-        UPDATE playground.books_lhw
-        SET AUTHOR  = #{author},
-            PUBLISHER = #{publisher},
-            PUBLICATION_DATE = #{publication_date},
-            PRICE  = #{price},
-            TITLE = #{title}
-        WHERE PID = #{pid}
-    </update>
+  </select>
+
+  <update id="revice" parameterType="BookDto">
+    UPDATE playground.book_lhw
+    SET AUTHOR         = #{author},
+        PUBLISHER      = #{publisher},
+        PUBLICATION_AT = #{publication_at},
+        PRICE          = #{price},
+        TITLE          = #{title}
+    WHERE deleted_at IS NULL
+      AND PID = #{pid}
+  </update>
 
 </mapper>
 
-<!--#{} , ${}의 차이
-#{}는 파라미터가 String 형태로 들어와 그대로 사용  WHERE pid = #{pid}는  WHERE pid = ? 값이 달라져도 같은 쿼리로 인식
-${}는 해당 컬럼의 자료형에 맞추어 파라미터의 자료형이 변경 사용자의 입력을 전달할 때는 사용하지 않는편이 좋음 WHERE pid = #{pid}는  WHERE pid = 2 값이 들어와 버림-->
+    <!--#{} , ${}의 차이
+    #{}는 파라미터가 String 형태로 들어와 그대로 사용  WHERE pid = #{pid}는  WHERE pid = ? 값이 달라져도 같은 쿼리로 인식
+    ${}는 해당 컬럼의 자료형에 맞추어 파라미터의 자료형이 변경 사용자의 입력을 전달할 때는 사용하지 않는편이 좋음 WHERE pid = #{pid}는  WHERE pid = 2 값이 들어와 버림-->

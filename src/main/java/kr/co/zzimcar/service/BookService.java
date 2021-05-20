@@ -1,6 +1,10 @@
 package kr.co.zzimcar.service;
 
 import kr.co.zzimcar.dto.*;
+import kr.co.zzimcar.dto.book.BookDataDto;
+import kr.co.zzimcar.dto.book.BookReqDto;
+import kr.co.zzimcar.dto.book.BookResDto;
+import kr.co.zzimcar.dto.book.BooksReqDto;
 import org.springframework.http.ResponseEntity;
 
 public interface BookService {
