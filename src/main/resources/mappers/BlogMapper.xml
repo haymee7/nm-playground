@@ -10,12 +10,39 @@
     )
   </insert>
 
-  <select id="retrieveOne" parameterType="int" resultType="BlogDto">
+  <select id="retriveOne" parameterType="int" resultType="BlogDto">
     SELECT
       b.title, b.post, b.writer, b.pid, b.created_at
     FROM
       playground.blog b
     WHERE
-      b.pid = #{pid}
+      deleted_at IS NULL
+      AND b.pid = #{pid}
+  </select>
+
+  <select id="getTotalCnt" resultType="int">
+    SELECT
+      count(*)
+    FROM
+      playground.blog b
+    WHERE
+      deleted_at IS NULL
+  </select>
+
+  <select id="retriveList" parameterType="map" resultType="BlogDto">
+    SELECT
+      b.title, b.post, b.writer, b.pid, b.created_at
+    FROM
+      playground.blog b
+    WHERE
+      deleted_at IS NULL
+  <if test='sort.equals("D")'>
+    ORDER BY b.pid DESC
+  </if>
+  <if test='sort.equals("A")'>
+    ORDER BY b.pid ASC
+  </if>
+    LIMIT
+      #{sp}, #{cnt}
   </select>
 </mapper>

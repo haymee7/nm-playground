@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLException;
+
+import static kr.co.zzimcar.enumeration.ResponseCode.SQL_EXCEPTION;
+
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -47,5 +51,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(ApiException.class)
   protected ResponseEntity<Object> handleIntApiException(ApiException ex) {
     return buildResponseEntity(new ResponseDto(ex));
+  }
+
+  @ExceptionHandler(SQLException.class)
+  protected ResponseEntity<Object> handleSQLException(SQLException ex) {
+    return buildResponseEntity(new ResponseDto(SQL_EXCEPTION));
   }
 }
