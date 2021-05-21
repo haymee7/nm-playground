@@ -12,18 +12,21 @@
 
   <select id="retrieveOne" parameterType="int" resultType="BlogDto">
     SELECT
-      b.pid, b.title, b.post, b.writer, b.pid, b.created_at
+      b.title, b.post, b.writer, b.pid, b.created_at
     FROM
       playground.blog b
     WHERE
       b.pid = #{pid}
+      AND deleted_at IS NULL
   </select>
 
-  <select id="retrieveByCnt" parameterType="int" resultType="BlogDto">
+  <select id="retrieveByCnt" parameterType="map" resultType="BlogDto">
     SELECT
       b.title, b.post, b.writer, b.pid, b.created_at
     FROM
       playground.blog b
+    WHERE
+      deleted_at IS NULL
     LIMIT
       #{sp}, #{cnt}
   </select>
@@ -33,5 +36,29 @@
       count(*)
     FROM
       playground.blog
+    WHERE
+      deleted_at IS NULL
   </select>
+
+  <select id="isExist" parameterType="int" resultType="int">
+    SELECT
+      count(*)
+    FROM
+      playground.blog
+    WHERE pid = #{pid} AND deleted_at IS NULL
+  </select>
+
+  <update id="updateOne" parameterType="map">
+    UPDATE playground.blog b SET
+      b.title = #{blogDto.title}, b.post = #{blogDto.post}, b.writer = #{blogDto.writer}
+    WHERE
+      b.pid = #{pid} AND deleted_at IS NULL;
+  </update>
+
+  <delete id="deleteOne" parameterType="int">
+    UPDATE playground.blog b SET
+      b.deleted_at = now()
+    WHERE
+      b.pid = #{pid} AND b.deleted_at IS NULL
+  </delete>
 </mapper>

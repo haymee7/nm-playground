@@ -1,4 +1,4 @@
-package kr.co.zzimcar.dto;
+package kr.co.zzimcar.dto.book;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,10 +12,5 @@ import java.util.List;
 public class BookResByCntDto {
 
   private int totalCnt;
-  private List<BookDto> list;
-
-  public BookResByCntDto(int totalCnt, List<BookDto> list) {
-    this.totalCnt = totalCnt;
-    this.list = list;
-  }
+  private List<BookResDto> list;
 }

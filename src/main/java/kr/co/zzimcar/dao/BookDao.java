@@ -1,6 +1,6 @@
 package kr.co.zzimcar.dao;
 
-import kr.co.zzimcar.dto.BookDto;
+import kr.co.zzimcar.dto.book.BookDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +13,7 @@ public interface BookDao {
   BookDto retrieveOne(int pid);
   List<BookDto> retrieveByCnt(int sp, int cnt, String sort);
   int totalCnt();
+  int isExist(int pid);
+  void updateOne(int pid, BookDto bookDto);
+  void deleteOne(int pid);
 }

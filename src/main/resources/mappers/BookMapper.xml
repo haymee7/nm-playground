@@ -4,28 +4,36 @@
 <mapper namespace="kr.co.zzimcar.dao.BookDao">
   <insert id="save" parameterType="BookDto">
     INSERT playground.book_yjh (
-      writer, publisher, publish_date, price, title
+      writer, publisher, publish_at, price, title
     ) VALUES (
-      #{writer}, #{publisher}, #{publishDate}, #{price}, #{title}
+      #{writer}, #{publisher}, #{publishAt}, #{price}, #{title}
     )
   </insert>
 
   <select id="retrieveOne" parameterType="int" resultType="BookDto">
     SELECT
-      b.pid, b.writer, b.publisher, b.publish_date, b.price, b.title, b.created_at
+      b.pid, b.writer, b.publisher, b.publish_at, b.price, b.title, b.created_at
     FROM
       playground.book_yjh b
     WHERE
       b.pid = #{pid}
+      AND deleted_at IS NULL
   </select>
 
-  <select id="retrieveByCnt" resultType="BookDto">
+  <select id="retrieveByCnt" parameterType="map" resultType="BookDto">
     SELECT
-      b.pid, b.writer, b.publisher, b.publish_date, b.price, b.title, b.created_at , b.updated_at, b.deleted_at
+      b.pid, b.writer, b.publisher, b.publish_at, b.price, b.title, b.created_at
     FROM
       playground.book_yjh b
+    WHERE
+      deleted_at IS NULL
     ORDER BY
-      pid ${sort}
+  <if test='sort.equals("D")'>
+     pid DESC
+  </if>
+  <if test='sort.equals("A")'>
+     pid ASC
+  </if>
     LIMIT
       #{sp}, #{cnt};
   </select>
@@ -37,4 +45,25 @@
       playground.book_yjh
   </select>
 
+  <select id="isExist" parameterType="int" resultType="int">
+    SELECT
+      count(*)
+    FROM
+      playground.book_yjh
+    WHERE pid = #{pid} AND deleted_at IS NULL
+  </select>
+
+  <update id="updateOne" parameterType="map">
+    UPDATE playground.book_yjh b SET
+      b.writer = #{bookDto.writer}, b.publisher = #{bookDto.publisher}, b.publish_at = #{bookDto.publishAt}, b.price = #{bookDto.price}, b.title = #{bookDto.title}
+    WHERE
+      b.pid = #{pid} AND deleted_at IS NULL;
+  </update>
+
+  <delete id="deleteOne" parameterType="int">
+    UPDATE playground.book_yjh b SET
+      b.deleted_at = now()
+    WHERE
+      b.pid = #{pid} AND b.deleted_at IS NULL
+  </delete>
 </mapper>

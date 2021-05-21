@@ -1,9 +1,8 @@
-package kr.co.zzimcar.dto;
+package kr.co.zzimcar.dto.blog;
 
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter

@@ -2,6 +2,11 @@ package kr.co.zzimcar.serviceImpl;
 
 import kr.co.zzimcar.dao.BlogDao;
 import kr.co.zzimcar.dto.*;
+import kr.co.zzimcar.dto.blog.BlogDto;
+import kr.co.zzimcar.dto.blog.BlogReqDto;
+import kr.co.zzimcar.dto.blog.BlogResByCntDto;
+import kr.co.zzimcar.dto.blog.BlogResDto;
+import kr.co.zzimcar.dto.book.BookDto;
 import kr.co.zzimcar.exception.ApiException;
 import kr.co.zzimcar.service.BlogService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +15,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.validation.Valid;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static kr.co.zzimcar.enumeration.ResponseCode.*;
 
@@ -23,40 +30,66 @@ public class BlogServiceImpl implements BlogService {
 
   @Override
   public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(int pid) {
-    try {
-      ResponseDto<BlogResDto> responseDto = new ResponseDto<>(true);
-      responseDto.setData(new BlogResDto(blogDao.retrieveOne(pid)));
+    // null일수도 아닐수도 있다. null일경우 ApiException 발생시킴
+    BlogDto blogDto = Optional.ofNullable(blogDao.retrieveOne(pid)).orElseThrow(() -> new ApiException(BLOG_RETRIVE_NOT_EXIST));
 
-      return ResponseEntity.ok(responseDto);
-    } catch (Exception e) {
-      log.info("-- 블로그 정보 불러오기 실패", e);
-      throw new ApiException(BLOG_NOT_FOUND);
-    }
+    ResponseDto<BlogResDto> responseDto = new ResponseDto<>(true);
+    responseDto.setData(new BlogResDto(blogDto));
+
+    return ResponseEntity.ok(responseDto);
   }
 
   @Override
   public ResponseEntity<ResponseDto<BlogResByCntDto>> retrieveByCnt(int sp, int cnt) {
-    try {
-      ResponseDto<BlogResByCntDto> responseDto = new ResponseDto<>(true);
-      responseDto.setData(new BlogResByCntDto(blogDao.totalCnt(), blogDao.retrieveByCnt(sp, cnt)));
+    checkRetrieveListParams(sp,cnt);
+    BlogResByCntDto blogResByCntDto = new BlogResByCntDto();
+    blogResByCntDto.setTotalCnt(blogDao.totalCnt());
+    // BlogResDto만 모아서 새로운 리스트를 만들어 낼 수 있다.
+    blogResByCntDto.setList(blogDao.retrieveByCnt(sp, cnt).stream().map(BlogResDto::new).collect(Collectors.toList()));
 
-      return ResponseEntity.ok(responseDto);
-    } catch (Exception e){
-      log.info("-- 블로그 목록 불러오기 실패", e);
-      throw new ApiException(BLOG_LIST_FAILED);
-    }
+    ResponseDto<BlogResByCntDto> responseDto = new ResponseDto<>(true);
+    responseDto.setData(blogResByCntDto);
+    return ResponseEntity.ok(responseDto);
   }
 
   @Override
-  public ResponseEntity<ResponseDto<Void>> create(BlogReqDto blogReqDto) {
+  public ResponseEntity<ResponseDto<Void>> create(@Valid BlogReqDto blogReqDto) {
+
     try {
       blogDao.save(new BlogDto(blogReqDto));
       return ResponseEntity.ok(new ResponseDto<>(true));
     } catch (Exception e) {
       log.info("-- 블로그 저장 실패", e);
-
-      // return ResponseEntity.ok(new ResponseDto<>(BLOG_SAVE_FAILED));
       throw new ApiException(BLOG_SAVE_FAILED);
     }
+  }
+
+  @Override
+  public ResponseEntity<ResponseDto<Void>> updateOne(int pid, BlogReqDto blogReqDto) {
+    if (blogDao.isExist(pid)==0) throw new ApiException(BLOG_NOT_EXIST);
+    try {
+      blogDao.updateOne(pid, new BlogDto(blogReqDto));
+      return ResponseEntity.ok(new ResponseDto<>(true));
+    } catch (Exception e) {
+      log.info("-- 책 수정 실패", e);
+      throw new ApiException(BLOG_UPDATE_FAILED);
+    }
+  }
+
+  @Override
+  public ResponseEntity<ResponseDto<Void>> deleteOne(int pid) {
+    if (blogDao.isExist(pid)==0) throw new ApiException(BLOG_NOT_EXIST);
+    try {
+      blogDao.deleteOne(pid);
+      return ResponseEntity.ok(new ResponseDto<>(true));
+    } catch (Exception e) {
+      log.info("-- 블로그 삭제 실패", e);
+      throw new ApiException(BLOG_DELETE_FAILED);
+    }
+  }
+
+  private void checkRetrieveListParams(int sp, int cnt) {
+    if (sp < 0) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SP);
+    if (cnt < 1) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_CNT);
   }
 }

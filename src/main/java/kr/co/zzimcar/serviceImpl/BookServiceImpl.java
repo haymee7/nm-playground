@@ -2,6 +2,10 @@ package kr.co.zzimcar.serviceImpl;
 
 import kr.co.zzimcar.dao.BookDao;
 import kr.co.zzimcar.dto.*;
+import kr.co.zzimcar.dto.book.BookDto;
+import kr.co.zzimcar.dto.book.BookReqDto;
+import kr.co.zzimcar.dto.book.BookResByCntDto;
+import kr.co.zzimcar.dto.book.BookResDto;
 import kr.co.zzimcar.exception.ApiException;
 import kr.co.zzimcar.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +14,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.annotation.Nullable;
+import javax.validation.Valid;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static kr.co.zzimcar.enumeration.ResponseCode.*;
 
@@ -22,7 +29,7 @@ public class BookServiceImpl implements BookService {
   private final BookDao bookDao;
 
   @Override
-  public ResponseEntity<ResponseDto<Void>> create(BookReqDto bookReqDto) {
+  public ResponseEntity<ResponseDto<Void>> create(@Valid BookReqDto bookReqDto) {
     try {
       bookDao.save(new BookDto(bookReqDto));
       return ResponseEntity.ok(new ResponseDto<>(true));
@@ -33,31 +40,55 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public ResponseEntity<ResponseDto<BookDto>> retrieveOne(int pid) {
-    try {
-//      ResponseDto<BookResDto> responseDto = new ResponseDto<>(true);
-//      responseDto.setData(new BookResDto(bookDao.retrieveOne(pid)));
-      // 이거 꼭 물어보기
-      ResponseDto<BookDto> responseDto = new ResponseDto<>(true);
-      responseDto.setData(new BookDto(bookDao.retrieveOne(pid)));
+  public ResponseEntity<ResponseDto<BookResDto>> retrieveOne(int pid) {
+    BookDto bookDto = Optional.ofNullable(bookDao.retrieveOne(pid)).orElseThrow(() -> new ApiException(BOOK_RETRIVE_NOT_EXIST));
 
-      return ResponseEntity.ok(responseDto);
-    } catch (Exception e) {
-      log.info("-- 책 정보 불러오기 실패");
-      throw new ApiException(BOOK_NOT_FOUND);
-    }
+    ResponseDto<BookResDto> responseDto = new ResponseDto<>(true);
+    responseDto.setData(new BookResDto(bookDto));
+
+    return ResponseEntity.ok(responseDto);
   }
 
   @Override
   public ResponseEntity<ResponseDto<BookResByCntDto>> retrieveByCnt(int sp, int cnt, String sort) {
-    try {
-      ResponseDto<BookResByCntDto> responseDto = new ResponseDto<>(true);
-      responseDto.setData(new BookResByCntDto(bookDao.totalCnt(), bookDao.retrieveByCnt(sp, cnt, sort.equals("n") ? "DESC" : "ASC")));
+    checkRetrieveListParams(sp, cnt, sort);
+    BookResByCntDto bookResByCntDto = new BookResByCntDto();
+    bookResByCntDto.setTotalCnt(bookDao.totalCnt());
+    bookResByCntDto.setList(bookDao.retrieveByCnt(sp, cnt, sort).stream().map(BookResDto::new).collect(Collectors.toList()));
 
-      return ResponseEntity.ok(responseDto);
+    ResponseDto<BookResByCntDto> responseDto = new ResponseDto<>(true);
+    responseDto.setData(bookResByCntDto);
+
+    return ResponseEntity.ok(responseDto);
+  }
+
+  @Override
+  public ResponseEntity<ResponseDto<Void>> updateOne(int pid, BookReqDto bookReqDto) {
+    if (bookDao.isExist(pid)==0) throw new ApiException(BOOK_NOT_EXIST);
+    try {
+      bookDao.updateOne(pid, new BookDto(bookReqDto));
+      return ResponseEntity.ok(new ResponseDto<>(true));
     } catch (Exception e) {
-      log.info("-- 책 목록 불러오기 실패");
-      throw new ApiException(BOOK_LIST_FAILED);
+      log.info("-- 책 수정 실패", e);
+      throw new ApiException(BOOK_UPDATE_FAILED);
     }
+  }
+
+  @Override
+  public ResponseEntity<ResponseDto<Void>> deleteOne(int pid) {
+    if (bookDao.isExist(pid)==0) throw new ApiException(BOOK_NOT_EXIST);
+    try {
+      bookDao.deleteOne(pid);
+      return ResponseEntity.ok(new ResponseDto<>(true));
+    } catch (Exception e) {
+      log.info("-- 책 삭제 실패", e);
+      throw new ApiException(BOOK_DELETE_FAILED);
+    }
+  }
+
+  private void checkRetrieveListParams(int sp, int cnt, String sort) {
+    if (sp < 0) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SP);
+    if (cnt < 1) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_CNT);
+    if (!"D".equals(sort) && !"A".equals(sort)) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SORT);
   }
 }
