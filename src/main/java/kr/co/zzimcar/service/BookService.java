@@ -14,5 +14,7 @@ public interface BookService {
 
     ResponseEntity<ResponseDto<BookDataDto>> retrieve(BooksReqDto booksReqDto);
 
-    ResponseEntity<ResponseDto<BookReqDto>> revice(int pid, BookReqDto bookReqDto);
+    ResponseEntity<ResponseDto<Void>> revice(int pid, BookReqDto bookReqDto);
+
+    ResponseEntity<ResponseDto<Void>> erase(int pid);
 }

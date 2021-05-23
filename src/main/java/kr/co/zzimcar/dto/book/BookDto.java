@@ -15,17 +15,17 @@ public class BookDto {
     private int pid;
     private String author;
     private String publisher;
-    private Date publication_at;
+    private Date publicationAt;
     private int price;
     private String title;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
-    private LocalDateTime deleted_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
     public BookDto(BookReqDto bookReqDto) {
         this.author = bookReqDto.getAuthor();
         this.publisher = bookReqDto.getPublisher();
-        this.publication_at = bookReqDto.getPublication_at();
+        this.publicationAt = bookReqDto.getPublicationAt();
         this.price = bookReqDto.getPrice();
         this.title = bookReqDto.getTitle();
     }
@@ -34,7 +34,7 @@ public class BookDto {
         this.pid = pid;
         this.author = bookReqDto.getAuthor();
         this.publisher = bookReqDto.getPublisher();
-        this.publication_at = bookReqDto.getPublication_at();
+        this.publicationAt = bookReqDto.getPublicationAt();
         this.price = bookReqDto.getPrice();
         this.title = bookReqDto.getTitle();
     }

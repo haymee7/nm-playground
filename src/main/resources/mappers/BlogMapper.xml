@@ -7,10 +7,9 @@
         playground.blog (
       title, post, writer
     ) VALUES (
-        #{title},
-        #{post},
-        #{writer}
+        #{title}, #{post}, #{writer}
         )
+        WHERE deleted_at IS NULL
     </insert>
 
     <select id="retrieveOne" parameterType="int" resultType="BlogDto">
@@ -20,9 +19,10 @@
                pid,
                created_at
         FROM playground.blog
-        WHERE pid = #{pid}
+        WHERE deleted_at IS NULL
+          AND pid = #{pid}
     </select>
-    <select id="retrieve" parameterType="BlogsReqDto" resultType="BlogDto">
+    <select id="retrieve" parameterType="BlogsReqDto" resultType="BlogResDto">
         SELECT title,
                post,
                writer,
@@ -36,11 +36,36 @@
         FROM playground.blog
     </select>
 
+    <select id="retriveList" parameterType="map" resultType="BlogDto">
+        SELECT
+        b.title, b.post, b.writer, b.pid, b.created_at
+        FROM
+        playground.blog b
+        WHERE
+        deleted_at IS NULL
+        <if test='sort.equals("D")'>
+            ORDER BY b.pid DESC
+        </if>
+        <if test='sort.equals("A")'>
+            ORDER BY b.pid ASC
+        </if>
+        LIMIT
+        #{sp}, #{cnt}
+    </select>
+
     <update id="revice" parameterType="BlogDto">
         UPDATE playground.blog
         SET TITLE  = #{title},
             POST   = #{post},
             WRITER = #{writer}
-        WHERE PID = #{pid}
+        WHERE deleted_at IS NULL
+          AND PID = #{pid}
     </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE
+        FROM playground.blog
+        WHERE deleted_at IS NULL
+          AND pid = #{pid};
+    </delete>
 </mapper>

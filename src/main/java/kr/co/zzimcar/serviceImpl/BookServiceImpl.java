@@ -35,13 +35,19 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public ResponseEntity<ResponseDto<BookResDto>> retrieveOne(int pid) {
+        checkIntParams(pid);
+        try {
+            BookDto bookDto = bookDao.retrieveOne(pid);
+            if (bookDto == null) throw new ApiException(BOOK_RETRIEVEONE_NULL);
+            BookResDto bookResDto = new BookResDto(bookDto);
+            ResponseDto<BookResDto> responseDto = new ResponseDto<>(true);
+            responseDto.setData(bookResDto);
+            return ResponseEntity.ok(responseDto);
+        } catch (Exception e) {
+            log.info(" --책 정보 pid로 불러오기 실패", e);
+            throw new ApiException(BOOK_RETRIEVEONE_FAILED);
 
-        BookDto bookDto = bookDao.retrieveOne(pid);
-        if (bookDto == null) throw new ApiException(BOOK_RETRIEVEONE_NULL);
-        BookResDto bookResDto = new BookResDto(bookDto);
-        ResponseDto<BookResDto> responseDto = new ResponseDto<>(true);
-        responseDto.setData(bookResDto);
-        return ResponseEntity.ok(responseDto);
+        }
     }
 
     @Override
@@ -57,14 +63,32 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public ResponseEntity<ResponseDto<BookReqDto>> revice(int pid, BookReqDto bookReqDto) {
+    public ResponseEntity<ResponseDto<Void>> revice(int pid, BookReqDto bookReqDto) {
+        checkIntParams(pid);
         try {
             bookDao.revice(new BookDto(pid, bookReqDto));
             return ResponseEntity.ok(new ResponseDto<>(true));
         } catch (Exception e) {
-            log.info(" --책 정보 수정 실패");
+            log.info(" --책 정보 수정 실패", e);
             throw new ApiException(BOOK_REVICE_FAILED);
         }
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<Void>> erase(int pid) {
+        try {
+            bookDao.delete(pid);
+            return ResponseEntity.ok(new ResponseDto<>(true));
+        } catch (Exception e) {
+            log.info(" --책 정보 삭제 실패", e);
+            throw new ApiException(BOOK_ERASE_FAILED);
+        }
+
+    }
+
+    private void checkIntParams(int pid) {
+        if (pid <= 0) throw new ApiException(BOOK_LOAD_PID);
+    }
+
 }
 

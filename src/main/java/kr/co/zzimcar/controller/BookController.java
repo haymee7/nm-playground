@@ -37,14 +37,20 @@ public class BookController {
 
     @PostMapping("/list")
     @ApiOperation("POST 책 정보불러오기 API")
-    public ResponseEntity<ResponseDto<BookDataDto>> retrieve(@RequestBody @ApiParam(value = "불러올 책 정보", required = true) @Valid BooksReqDto booksReqDto) {
+    public ResponseEntity<ResponseDto<BookDataDto>> retrieve(@RequestBody @ApiParam(value = "불러올 책의 정보", required = true) @Valid BooksReqDto booksReqDto) {
         return bookService.retrieve(booksReqDto);
     }
 
     @PutMapping("/{pid}")
     @ApiOperation("put 책 정보 수정하기 API")
-    public ResponseEntity<ResponseDto<BookReqDto>> revice(@PathVariable int pid, @RequestBody BookReqDto bookReqDto) {
+    public ResponseEntity<ResponseDto<Void>> revice(@PathVariable @ApiParam(value = "수정할 책의 번호", required = true) int pid, @RequestBody @ApiParam(value = "수정할 책의 정보", required = true) @Valid BookReqDto bookReqDto) {
         return bookService.revice(pid, bookReqDto);
+    }
+
+    @DeleteMapping("/{pid}")
+    @ApiOperation("DELETE 책 정보 삭제하기 API")
+    public ResponseEntity<ResponseDto<Void>> erase(@PathVariable @ApiParam(value = "삭제할 책의 번호", required = true) int pid) {
+        return bookService.erase(pid);
     }
 
 }

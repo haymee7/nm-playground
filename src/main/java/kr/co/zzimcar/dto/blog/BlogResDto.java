@@ -1,6 +1,7 @@
 package kr.co.zzimcar.dto.blog;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class BlogResDto {
     private int pid;
     private String post;

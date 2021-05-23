@@ -22,4 +22,6 @@ public interface BookDao {
 
     int revice(BookDto bookDto);
 
+    int delete(int pid);
+
 }

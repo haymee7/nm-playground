@@ -16,7 +16,7 @@
        (
         #{author},
         #{publisher},
-        #{publication_at},
+        #{publicationAt},
         #{price},
         #{title}
         )
@@ -27,7 +27,8 @@
                publisher,
                publication_at,
                price,
-               title
+               title,
+               created_at
         FROM playground.book_lhw
         WHERE deleted_at IS NULL
           AND pid = #{pid}
@@ -57,12 +58,19 @@
         UPDATE playground.book_lhw
         SET AUTHOR         = #{author},
             PUBLISHER      = #{publisher},
-            PUBLICATION_AT = #{publication_at},
+            PUBLICATION_AT = #{publicationAt},
             PRICE          = #{price},
             TITLE          = #{title}
         WHERE deleted_at IS NULL
           AND PID = #{pid}
     </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE
+        FROM playground.book_lhw
+        WHERE deleted_at IS NULL
+          AND pid = #{pid}
+    </delete>
 
 </mapper>
 

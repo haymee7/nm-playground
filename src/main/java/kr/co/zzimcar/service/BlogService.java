@@ -1,10 +1,7 @@
 package kr.co.zzimcar.service;
 
 import kr.co.zzimcar.dto.*;
-import kr.co.zzimcar.dto.blog.BlogDataDto;
-import kr.co.zzimcar.dto.blog.BlogReqDto;
-import kr.co.zzimcar.dto.blog.BlogResDto;
-import kr.co.zzimcar.dto.blog.BlogsReqDto;
+import kr.co.zzimcar.dto.blog.*;
 import org.springframework.http.ResponseEntity;
 
 
@@ -16,6 +13,10 @@ public interface BlogService {
     ResponseEntity<ResponseDto<BlogDataDto>> retrieve(BlogsReqDto blogsReqDto);
 
     ResponseEntity<ResponseDto<BlogReqDto>> revice(int pid, BlogReqDto blogReqDto);
+
+    ResponseEntity<ResponseDto<BlogPageResDto>> retriveList(int sp, int cnt, String sort);
+
+    ResponseEntity<ResponseDto<Void>> erase(int pid);
 
 }
 
