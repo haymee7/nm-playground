@@ -26,12 +26,14 @@ public class BookController {
 
   @PostMapping("")
   @ApiOperation("책 작성 API")
+  // TODO: 공통과제1(validation 에러 여러개인 경우 string 으로 이어서 message 로 전달하기(이쁘게)) - 안되어 있음
   public ResponseEntity<ResponseDto<Void>> create(@RequestBody @Valid @ApiParam(value = "저장할 책 정보", required = true) BookReqDto bookReqDto) {
     return bookService.create(bookReqDto);
   }
 
   @GetMapping("/{pid}")
   @ApiOperation("책 조회 API")
+  // TODO: 파라미터 타입 익셉션 처리 해야함
   public ResponseEntity<ResponseDto<BookResDto>> retrieveOne(@PathVariable @ApiParam(value = "책 번호", required = true, example = "1") int pid) {
     return bookService.retrieveOne(pid);
   }
