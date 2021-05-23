@@ -28,6 +28,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
+    // TODO: 코드 정리하세요. 필요없는 주석은 빼고.
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
                                                                   WebRequest request) {
         ResponseDto<Void> responseDto = new ResponseDto<Void>(false);
@@ -35,6 +36,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         StringBuilder builder = new StringBuilder();
 
+        // TODO: 좀 더 간결하게 만들어봅시다.
         if (!ex.getBindingResult().getFieldErrors().isEmpty()) {
             for (int i = 0; i < ex.getBindingResult().getFieldErrors().size(); i++) {
                 String message = "[" + ex.getBindingResult().getFieldErrors().get(i).getField() + "]" + ex.getBindingResult().getFieldErrors().get(i).getDefaultMessage();
@@ -70,6 +72,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String error = "Malformed JSON request";
         return buildResponseEntity(new ResponseDto<>("요청 JSON 포맷 오류"));
     }  //json형태가 아닐떄 나옴 ..  "post": "string", "title": "string", ,로 끝나면 json형태가 아니니까 오류 발생
+    // TODO: 위와 같은 문법/로직 설명용 주석은 앞으로 줄이도록 하세요. 공부용이라면 따로 개인적으로 정리하도록..
 
     @ExceptionHandler(ApiException.class)  //ApiException으로 들어오느 에러 제어
     protected ResponseEntity<Object> handleIntApiException(ApiException ex) {

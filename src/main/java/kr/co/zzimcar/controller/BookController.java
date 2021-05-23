@@ -43,12 +43,14 @@ public class BookController {
 
     @PutMapping("/{pid}")
     @ApiOperation("put 책 정보 수정하기 API")
+    // TODO: pid 와 bookReqDto 따로 받은 이유 짐작은 되나 그럴필요 없음.
     public ResponseEntity<ResponseDto<Void>> revice(@PathVariable @ApiParam(value = "수정할 책의 번호", required = true) int pid, @RequestBody @ApiParam(value = "수정할 책의 정보", required = true) @Valid BookReqDto bookReqDto) {
         return bookService.revice(pid, bookReqDto);
     }
 
     @DeleteMapping("/{pid}")
     @ApiOperation("DELETE 책 정보 삭제하기 API")
+    // TODO: 삭제 관련한 함수명은 보통 delete 단어를 사용함.
     public ResponseEntity<ResponseDto<Void>> erase(@PathVariable @ApiParam(value = "삭제할 책의 번호", required = true) int pid) {
         return bookService.erase(pid);
     }
