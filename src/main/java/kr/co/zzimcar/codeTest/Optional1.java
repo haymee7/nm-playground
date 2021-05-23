@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+////////////////////////////////////////////   Optional 블로그 https://yju7257.tistory.com/112   ////////////////////////////////////////////////////////////////
 public class Optional1 {
 
     static List<Person> persons = new ArrayList<>();
     public static void main(String[] args) {
+
 ////////////////////////////////////////////   Optional 필요이유/정의   ////////////////////////////////////////////////////////////////
         // Person p = new Person()은 Person을 사용하기 위해 메모리를 할당 한 후, 그 레퍼런스를 p
         // 에게 할당하라는 뜻이다. 그러나 Person p = null 은 아무런 레퍼런스도 없으므로 NPE가 발생
