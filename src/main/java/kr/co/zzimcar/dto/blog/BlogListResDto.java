@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class BlogResByCntDto {
+public class BlogListResDto {
 
   private int totalCnt;
   private List<BlogResDto> list;

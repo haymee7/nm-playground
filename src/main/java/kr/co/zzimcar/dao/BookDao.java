@@ -11,7 +11,7 @@ import java.util.List;
 public interface BookDao {
   void save(BookDto bookDto);
   BookDto retrieveOne(int pid);
-  List<BookDto> retrieveByCnt(int sp, int cnt, String sort);
+  List<BookDto> retrieveByCnt(int sp, int cnt, char sort);
   int totalCnt();
   int isExist(int pid);
   void updateOne(int pid, BookDto bookDto);

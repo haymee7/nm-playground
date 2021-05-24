@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class BookResByCntDto {
+public class BookListResDto {
 
   private int totalCnt;
   private List<BookResDto> list;

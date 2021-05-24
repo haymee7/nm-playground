@@ -4,14 +4,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import kr.co.zzimcar.dto.blog.BlogReqDto;
-import kr.co.zzimcar.dto.blog.BlogResByCntDto;
+import kr.co.zzimcar.dto.blog.BlogListResDto;
 import kr.co.zzimcar.dto.blog.BlogResDto;
 import kr.co.zzimcar.dto.ResponseDto;
-import kr.co.zzimcar.dto.book.BookReqDto;
 import kr.co.zzimcar.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,14 +31,14 @@ public class BlogController {
 
   @GetMapping("/{pid}")
   @ApiOperation("블로그 하나 조회 API")
-  public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(@PathVariable @ApiParam(value = "블로그 글 번호", required = true, example = "1") int pid) {
+  public ResponseEntity<ResponseDto<BlogResDto>> retrieveOne(@PathVariable @Valid @ApiParam(value = "블로그 글 번호", required = true, example = "1") int pid) {
     return blogService.retrieveOne(pid);
   }
 
   @GetMapping("")
   @ApiOperation("블로그 목록 API")
-  public ResponseEntity<ResponseDto<BlogResByCntDto>> retrieveByCnt(@RequestParam("sp") @ApiParam(value = "시작번호", required = true, example = "1") int sp,
-                                                                    @RequestParam("cnt") @ApiParam(value = "불러올갯수", required = true, example = "5") int cnt) {
+  public ResponseEntity<ResponseDto<BlogListResDto>> retrieveByCnt(@RequestParam("sp") @ApiParam(value = "시작번호", required = true, example = "1") int sp,
+                                                                   @RequestParam("cnt") @ApiParam(value = "불러올갯수", required = true, example = "5") int cnt) {
     return blogService.retrieveByCnt(sp,cnt);
   }
 

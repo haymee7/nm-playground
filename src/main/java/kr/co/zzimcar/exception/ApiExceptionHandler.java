@@ -7,11 +7,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -25,36 +30,22 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
                                                                 WebRequest request) {
     ResponseDto<Void> responseDto = new ResponseDto<Void>(false);
-
-//    StringBuilder builder = new StringBuilder();
-//
-//    if (!ex.getBindingResult().getFieldErrors().isEmpty()) {
-//      for (int i = 0; i < ex.getBindingResult().getFieldErrors().size(); i++) {
-//        String message = "[" + ex.getBindingResult().getFieldErrors().get(i).getField() + "]" + ex.getBindingResult().getFieldErrors().get(i).getDefaultMessage();
-//        builder.append(message + ". ");
-//      }
-//    } else if (!ex.getBindingResult().getGlobalErrors().isEmpty()) {
-//      String message = "[" + ex.getBindingResult().getGlobalErrors().get(0).getObjectName() + "]" + ex.getBindingResult().getGlobalErrors().get(0).getDefaultMessage();
-//      builder.append(message + ". ");
-//    } else {
-//      String message = "데이터 형식 오류";
-//      builder.append(message);
-//    }
-//
-//    responseDto.setMessage(builder.toString());
-
+///////////  생성  /////////
     String message = "";
-    if(!ex.getBindingResult().getFieldErrors().isEmpty()) {
-      for(int i = 0; i < ex.getBindingResult().getFieldErrors().size(); i++) {
-        message += ex.getBindingResult().getFieldErrors().get(i).getDefaultMessage() + ". ";
+    List<FieldError> BF = ex.getBindingResult().getFieldErrors();
+    List<ObjectError> BG = ex.getBindingResult().getGlobalErrors();
+
+    if(!BF.isEmpty()) {
+      for(FieldError i : BF) {
+        message += i.getDefaultMessage()+". ";
       }
-    } else if(!ex.getBindingResult().getGlobalErrors().isEmpty()) {
-      message += ex.getBindingResult().getGlobalErrors().get(0).getDefaultMessage() + ". ";
+    } else if(!BG.isEmpty()) {
+      message = BG.get(0).getDefaultMessage() + ". ";
     } else {
-      message += "데이터 형식 오류";
+      message = "데이터 형식 오류";
     }
     responseDto.setMessage(message);
-
+///////////  기존  /////////
 //    String message = "";
 //    String message1 = !ex.getBindingResult().getFieldErrors().isEmpty() ?
 //      "[" + ex.getBindingResult().getFieldErrors().get(0).getField() + "]" + ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage() :

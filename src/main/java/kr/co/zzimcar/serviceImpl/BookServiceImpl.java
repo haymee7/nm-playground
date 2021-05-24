@@ -1,10 +1,11 @@
 package kr.co.zzimcar.serviceImpl;
 
+import io.swagger.annotations.Api;
 import kr.co.zzimcar.dao.BookDao;
 import kr.co.zzimcar.dto.*;
 import kr.co.zzimcar.dto.book.BookDto;
 import kr.co.zzimcar.dto.book.BookReqDto;
-import kr.co.zzimcar.dto.book.BookResByCntDto;
+import kr.co.zzimcar.dto.book.BookListResDto;
 import kr.co.zzimcar.dto.book.BookResDto;
 import kr.co.zzimcar.exception.ApiException;
 import kr.co.zzimcar.service.BookService;
@@ -14,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,15 +50,15 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public ResponseEntity<ResponseDto<BookResByCntDto>> retrieveByCnt(int sp, int cnt, String sort) {
+  public ResponseEntity<ResponseDto<BookListResDto>> retrieveByCnt(int sp, int cnt, char sort) {
     checkRetrieveListParams(sp, cnt, sort);
     // TODO: BookResByCntDto -> BookListResDto || BookPagingResDto
-    BookResByCntDto bookResByCntDto = new BookResByCntDto();
-    bookResByCntDto.setTotalCnt(bookDao.totalCnt());
-    bookResByCntDto.setList(bookDao.retrieveByCnt(sp, cnt, sort).stream().map(BookResDto::new).collect(Collectors.toList()));
+    BookListResDto bookListResDto = new BookListResDto();
+    bookListResDto.setTotalCnt(bookDao.totalCnt());
+    bookListResDto.setList(bookDao.retrieveByCnt(sp, cnt, sort).stream().map(BookResDto::new).collect(Collectors.toList()));
 
-    ResponseDto<BookResByCntDto> responseDto = new ResponseDto<>(true);
-    responseDto.setData(bookResByCntDto);
+    ResponseDto<BookListResDto> responseDto = new ResponseDto<>(true);
+    responseDto.setData(bookListResDto);
 
     return ResponseEntity.ok(responseDto);
   }
@@ -67,32 +67,21 @@ public class BookServiceImpl implements BookService {
   public ResponseEntity<ResponseDto<Void>> updateOne(int pid, BookReqDto bookReqDto) {
     // TODO: pid 없어도 됨, try-catch 꼭 써야했을까?
     if (bookDao.isExist(pid)==0) throw new ApiException(BOOK_NOT_EXIST);
-    try {
-      bookDao.updateOne(pid, new BookDto(bookReqDto));
-      return ResponseEntity.ok(new ResponseDto<>(true));
-    } catch (Exception e) {
-      log.info("-- 책 수정 실패", e);
-      throw new ApiException(BOOK_UPDATE_FAILED);
-    }
+    bookDao.updateOne(pid, new BookDto(bookReqDto));
+    return ResponseEntity.ok(new ResponseDto<>(true));
   }
 
   @Override
   public ResponseEntity<ResponseDto<Void>> deleteOne(int pid) {
     // TODO: isExist 필요했을까?
-    if (bookDao.isExist(pid)==0) throw new ApiException(BOOK_NOT_EXIST);
-    try {
       bookDao.deleteOne(pid);
       return ResponseEntity.ok(new ResponseDto<>(true));
-    } catch (Exception e) {
-      log.info("-- 책 삭제 실패", e);
-      throw new ApiException(BOOK_DELETE_FAILED);
-    }
   }
 
-  private void checkRetrieveListParams(int sp, int cnt, String sort) {
-    if (sp < 0) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SP);
-    if (cnt < 1) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_CNT);
+  private void checkRetrieveListParams(int sp, int cnt, char sort) {
+    if (sp < 0) throw new ApiException(COMM_PAGING_REQ_PARAM_INVALID_SP);
+    if (cnt < 1) throw new ApiException(COMM_PAGING_REQ_PARAM_INVALID_CNT);
     // TODO: 상수 변수
-    if (!"D".equals(sort) && !"A".equals(sort)) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SORT);
+    if (!"D".equals(sort) && !"A".equals(sort)) throw new ApiException(COMM_PAGING_REQ_PARAM_INVALID_SORT);
   }
 }

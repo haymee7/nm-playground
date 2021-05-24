@@ -53,7 +53,7 @@
     WHERE pid = #{pid} AND deleted_at IS NULL
   </select>
 
-  <update id="updateOne" parameterType="map">
+  <update id="updateOne" parameterType="BookDto">
     UPDATE playground.book_yjh b SET
       b.writer = #{bookDto.writer}, b.publisher = #{bookDto.publisher}, b.publish_at = #{bookDto.publishAt}, b.price = #{bookDto.price}, b.title = #{bookDto.title}
     WHERE

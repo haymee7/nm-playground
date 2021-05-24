@@ -22,10 +22,10 @@ public enum ResponseCode {
   BOOK_NOT_EXIST("BOOK_10006", "책이 이미 삭제되었거나, 잘못된 pid번호 입니다."),
 
   // TODO: 오류 코드 중복
-  BLOG_PAGING_REQ_PARAM_INVALID_SP("BLOG_10002", "sp는 0이상 값이어야 합니다."),
-  BLOG_PAGING_REQ_PARAM_INVALID_CNT("BLOG_10003", "cnt는 0보다 큰 값이어야 합니다."),
-  BLOG_PAGING_REQ_PARAM_INVALID_SORT("BLOG_10004", "sort는 D 또는 A 여야함"),
-  BLOG_RETRIVE_NOT_EXIST("BLOG_10005", "데이터가 존재하지 않습니다."),
+  COMM_PAGING_REQ_PARAM_INVALID_SP("Comm_Error_10001", "sp는 0이상 값이어야 합니다."),
+  COMM_PAGING_REQ_PARAM_INVALID_CNT("Comm_Error_10002", "cnt는 0보다 큰 값이어야 합니다."),
+  COMM_PAGING_REQ_PARAM_INVALID_SORT("Comm_Error_10003", "sort는 D 또는 A 여야함"),
+  COMM_RETRIVE_NOT_EXIST("Comm_Error_10004", "데이터가 존재하지 않습니다."),
 
   SQL_EXCEPTION("SQL_10000", "데이터 저장/불러오기 실패");
 

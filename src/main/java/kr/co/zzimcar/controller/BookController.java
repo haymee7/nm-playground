@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import kr.co.zzimcar.dto.*;
 import kr.co.zzimcar.dto.book.BookReqDto;
-import kr.co.zzimcar.dto.book.BookResByCntDto;
+import kr.co.zzimcar.dto.book.BookListResDto;
 import kr.co.zzimcar.dto.book.BookResDto;
 import kr.co.zzimcar.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -34,15 +34,15 @@ public class BookController {
   @GetMapping("/{pid}")
   @ApiOperation("책 조회 API")
   // TODO: 파라미터 타입 익셉션 처리 해야함
-  public ResponseEntity<ResponseDto<BookResDto>> retrieveOne(@PathVariable @ApiParam(value = "책 번호", required = true, example = "1") int pid) {
+  public ResponseEntity<ResponseDto<BookResDto>> retrieveOne(@PathVariable @Valid @ApiParam(value = "책 번호", required = true, example = "1") int pid) {
     return bookService.retrieveOne(pid);
   }
 
   @GetMapping("")
   @ApiOperation("책 목록 불러오기")
-  public ResponseEntity<ResponseDto<BookResByCntDto>> retrieveByCnt(@RequestParam("sp") @ApiParam(value = "시작 인덱스", required = true, example = "1") int sp,
-                                                                    @RequestParam("cnt") @ApiParam(value = "불러올 글 갯수", required = true, example = "5") int cnt,
-                                                                    @RequestParam("sort") @ApiParam(value = "정렬 순서(최신순 = D, 오래된순 = A)", required = true, example = "D") String sort) {
+  public ResponseEntity<ResponseDto<BookListResDto>> retrieveByCnt(@RequestParam("sp") @ApiParam(value = "시작 인덱스", required = true, example = "1") int sp,
+                                                                   @RequestParam("cnt") @ApiParam(value = "불러올 글 갯수", required = true, example = "5") int cnt,
+                                                                   @RequestParam("sort") @ApiParam(value = "정렬 순서(최신순 = D, 오래된순 = A)", required = true, example = "D") char sort) {
     return bookService.retrieveByCnt(sp, cnt, sort);
   }
 
