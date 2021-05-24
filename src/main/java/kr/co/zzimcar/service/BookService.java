@@ -8,13 +8,13 @@ import kr.co.zzimcar.dto.book.BooksReqDto;
 import org.springframework.http.ResponseEntity;
 
 public interface BookService {
-    ResponseEntity<ResponseDto<Void>> create(BookReqDto bookReqDto);
+  ResponseEntity<ResponseDto<Void>> create(BookReqDto bookReqDto);
 
-    ResponseEntity<ResponseDto<BookResDto>> retrieveOne(int pid);
+  ResponseEntity<ResponseDto<BookResDto>> retrieveOne(int pid);
 
-    ResponseEntity<ResponseDto<BookDataDto>> retrieve(BooksReqDto booksReqDto);
+  ResponseEntity<ResponseDto<BookDataDto>> retrieve(BooksReqDto booksReqDto);
 
-    ResponseEntity<ResponseDto<Void>> revice(int pid, BookReqDto bookReqDto);
+  ResponseEntity<ResponseDto<Void>> update(int pid, BookReqDto bookReqDto);
 
-    ResponseEntity<ResponseDto<Void>> erase(int pid);
+  ResponseEntity<ResponseDto<Void>> delete(int pid);
 }
