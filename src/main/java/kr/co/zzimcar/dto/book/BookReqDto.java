@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class BookReqDto {
+  // TODO: 라인 분리
   @NotNull(message = "writer를 입력해주세요")
   @ApiModelProperty(value = "책 작가")
   @Size(min = 1, max = 20)

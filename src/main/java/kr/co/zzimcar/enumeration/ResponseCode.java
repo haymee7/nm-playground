@@ -21,7 +21,7 @@ public enum ResponseCode {
   BOOK_DELETE_FAILED("BOOK_10005", "책 삭제 실패"),
   BOOK_NOT_EXIST("BOOK_10006", "책이 이미 삭제되었거나, 잘못된 pid번호 입니다."),
 
-
+  // TODO: 오류 코드 중복
   BLOG_PAGING_REQ_PARAM_INVALID_SP("BLOG_10002", "sp는 0이상 값이어야 합니다."),
   BLOG_PAGING_REQ_PARAM_INVALID_CNT("BLOG_10003", "cnt는 0보다 큰 값이어야 합니다."),
   BLOG_PAGING_REQ_PARAM_INVALID_SORT("BLOG_10004", "sort는 D 또는 A 여야함"),

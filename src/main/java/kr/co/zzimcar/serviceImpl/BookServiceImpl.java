@@ -52,6 +52,7 @@ public class BookServiceImpl implements BookService {
   @Override
   public ResponseEntity<ResponseDto<BookResByCntDto>> retrieveByCnt(int sp, int cnt, String sort) {
     checkRetrieveListParams(sp, cnt, sort);
+    // TODO: BookResByCntDto -> BookListResDto || BookPagingResDto
     BookResByCntDto bookResByCntDto = new BookResByCntDto();
     bookResByCntDto.setTotalCnt(bookDao.totalCnt());
     bookResByCntDto.setList(bookDao.retrieveByCnt(sp, cnt, sort).stream().map(BookResDto::new).collect(Collectors.toList()));
@@ -64,6 +65,7 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public ResponseEntity<ResponseDto<Void>> updateOne(int pid, BookReqDto bookReqDto) {
+    // TODO: pid 없어도 됨, try-catch 꼭 써야했을까?
     if (bookDao.isExist(pid)==0) throw new ApiException(BOOK_NOT_EXIST);
     try {
       bookDao.updateOne(pid, new BookDto(bookReqDto));
@@ -76,6 +78,7 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public ResponseEntity<ResponseDto<Void>> deleteOne(int pid) {
+    // TODO: isExist 필요했을까?
     if (bookDao.isExist(pid)==0) throw new ApiException(BOOK_NOT_EXIST);
     try {
       bookDao.deleteOne(pid);
@@ -89,6 +92,7 @@ public class BookServiceImpl implements BookService {
   private void checkRetrieveListParams(int sp, int cnt, String sort) {
     if (sp < 0) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SP);
     if (cnt < 1) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_CNT);
+    // TODO: 상수 변수
     if (!"D".equals(sort) && !"A".equals(sort)) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SORT);
   }
 }
