@@ -26,13 +26,43 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                                                                 WebRequest request) {
     ResponseDto<Void> responseDto = new ResponseDto<Void>(false);
 
-    String message = !ex.getBindingResult().getFieldErrors().isEmpty() ?
-      "[" + ex.getBindingResult().getFieldErrors().get(0).getField() + "]" + ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage() :
-      !ex.getBindingResult().getGlobalErrors().isEmpty() ?
-        "[" + ex.getBindingResult().getGlobalErrors().get(0).getObjectName() + "]" + ex.getBindingResult().getGlobalErrors().get(0).getDefaultMessage()
-        : "데이터 형식 오류";
+//    StringBuilder builder = new StringBuilder();
+//
+//    if (!ex.getBindingResult().getFieldErrors().isEmpty()) {
+//      for (int i = 0; i < ex.getBindingResult().getFieldErrors().size(); i++) {
+//        String message = "[" + ex.getBindingResult().getFieldErrors().get(i).getField() + "]" + ex.getBindingResult().getFieldErrors().get(i).getDefaultMessage();
+//        builder.append(message + ". ");
+//      }
+//    } else if (!ex.getBindingResult().getGlobalErrors().isEmpty()) {
+//      String message = "[" + ex.getBindingResult().getGlobalErrors().get(0).getObjectName() + "]" + ex.getBindingResult().getGlobalErrors().get(0).getDefaultMessage();
+//      builder.append(message + ". ");
+//    } else {
+//      String message = "데이터 형식 오류";
+//      builder.append(message);
+//    }
+//
+//    responseDto.setMessage(builder.toString());
 
+    String message = "";
+    if(!ex.getBindingResult().getFieldErrors().isEmpty()) {
+      for(int i = 0; i < ex.getBindingResult().getFieldErrors().size(); i++) {
+        message += ex.getBindingResult().getFieldErrors().get(i).getDefaultMessage() + ". ";
+      }
+    } else if(!ex.getBindingResult().getGlobalErrors().isEmpty()) {
+      message += ex.getBindingResult().getGlobalErrors().get(0).getDefaultMessage() + ". ";
+    } else {
+      message += "데이터 형식 오류";
+    }
     responseDto.setMessage(message);
+
+//    String message = "";
+//    String message1 = !ex.getBindingResult().getFieldErrors().isEmpty() ?
+//      "[" + ex.getBindingResult().getFieldErrors().get(0).getField() + "]" + ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage() :
+//      !ex.getBindingResult().getGlobalErrors().isEmpty() ?
+//        "[" + ex.getBindingResult().getGlobalErrors().get(0).getObjectName() + "]" + ex.getBindingResult().getGlobalErrors().get(0).getDefaultMessage()
+//        : "데이터 형식 오류";
+//
+//    responseDto.setMessage(message+message1);
 
 
     return buildResponseEntity(responseDto);
