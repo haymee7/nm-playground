@@ -42,9 +42,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     } else if(!BG.isEmpty()) {
       message = BG.get(0).getDefaultMessage() + ". ";
     } else {
-      message = "데이터 형식 오류";
+      message = "데이터 형식 오류 오류";
     }
+    ////////////////////
     responseDto.setMessage(message);
+    System.out.println(message);
 ///////////  기존  /////////
 //    String message = "";
 //    String message1 = !ex.getBindingResult().getFieldErrors().isEmpty() ?
