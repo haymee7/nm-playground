@@ -6,6 +6,7 @@ import kr.co.zzimcar.dto.book.BookDto;
 import kr.co.zzimcar.dto.book.BookReqDto;
 import kr.co.zzimcar.dto.book.BookResByCntDto;
 import kr.co.zzimcar.dto.book.BookResDto;
+import kr.co.zzimcar.enumeration.Order;
 import kr.co.zzimcar.exception.ApiException;
 import kr.co.zzimcar.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +27,10 @@ public class BookServiceImpl implements BookService {
 
   private final Logger log = LogManager.getLogger(BookServiceImpl.class);
   private final BookDao bookDao;
+
+  private final static String ORDER_DESC = "D";
+  private final static String ORDER_ASC = "A";
+
 
   @Override
   public ResponseEntity<ResponseDto<Void>> create(@Valid BookReqDto bookReqDto) {
@@ -52,7 +56,7 @@ public class BookServiceImpl implements BookService {
   @Override
   public ResponseEntity<ResponseDto<BookResByCntDto>> retrieveByCnt(int sp, int cnt, String sort) {
     checkRetrieveListParams(sp, cnt, sort);
-    // TODO: BookResByCntDto -> BookListResDto || BookPagingResDto
+    // TODO: BookResByCntDto -> BookListResDto || BookPagingResDto   ResDto
     BookResByCntDto bookResByCntDto = new BookResByCntDto();
     bookResByCntDto.setTotalCnt(bookDao.totalCnt());
     bookResByCntDto.setList(bookDao.retrieveByCnt(sp, cnt, sort).stream().map(BookResDto::new).collect(Collectors.toList()));
@@ -65,8 +69,15 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public ResponseEntity<ResponseDto<Void>> updateOne(int pid, BookReqDto bookReqDto) {
+
+    BookDto bookDto = Optional.ofNullable(bookDao.retrieveOne(pid)).orElseThrow(() -> new ApiException(BOOK_NOT_EXIST));
+    bookDto.setTitle(bookReqDto.getTitle());
+    if (bookDao.save(bookDto) == 0) throw new ApiException();
+
+    return ResponseEntity.ok(new ResponseDto<>(true));
+
     // TODO: pid 없어도 됨, try-catch 꼭 써야했을까?
-    if (bookDao.isExist(pid)==0) throw new ApiException(BOOK_NOT_EXIST);
+    if (bookDao.isExist(pid) == 0) throw new ApiException(BOOK_NOT_EXIST);
     try {
       bookDao.updateOne(pid, new BookDto(bookReqDto));
       return ResponseEntity.ok(new ResponseDto<>(true));
@@ -79,7 +90,7 @@ public class BookServiceImpl implements BookService {
   @Override
   public ResponseEntity<ResponseDto<Void>> deleteOne(int pid) {
     // TODO: isExist 필요했을까?
-    if (bookDao.isExist(pid)==0) throw new ApiException(BOOK_NOT_EXIST);
+    if (bookDao.isExist(pid) == 0) throw new ApiException(BOOK_NOT_EXIST);
     try {
       bookDao.deleteOne(pid);
       return ResponseEntity.ok(new ResponseDto<>(true));
@@ -93,6 +104,6 @@ public class BookServiceImpl implements BookService {
     if (sp < 0) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SP);
     if (cnt < 1) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_CNT);
     // TODO: 상수 변수
-    if (!"D".equals(sort) && !"A".equals(sort)) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SORT);
+    if (!Order.DESC.getOrder().equals(sort) && !"A".equals(sort)) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SORT);
   }
 }

@@ -20,18 +20,22 @@ public class BookReqDto {
   @ApiModelProperty(value = "책 작가")
   @Size(min = 1, max = 20)
   private String writer;
+
   @NotNull(message = "publisher를 입력해주세요")
   @ApiModelProperty(value = "책 출판사")
   @Size(min = 1, max = 20)
   private String publisher;
+
   @NotNull(message = "publish_at을 입력해주세요")
   @ApiModelProperty(value = "출판 일자")
   private LocalDateTime publishAt;
+
   @NotNull(message = "price를 입력해주세요")
   @ApiModelProperty(value = "책 가격")
   @Max(value = 1000000)
   @Min(value = 0)
   private int price;
+
   @NotNull(message = "title를 입력해주세요")
   @ApiModelProperty(value = "책 제목")
   @Size(min = 1, max = 20)
