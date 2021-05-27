@@ -25,7 +25,7 @@ public class BookController {
 
   @PostMapping("")
   @ApiOperation("POST 책 정보입력 API")
-  public ResponseEntity<ResponseDto<Void>> create(@RequestBody @ApiParam(value = "저장할 책 정보", required = true) @Valid BookReqDto bookReqDto) {
+  public ResponseEntity<ResponseDto<Void>> create(@RequestBody  @ApiParam(value = "저장할 책 정보", required = true) @Valid BookReqDto bookReqDto) {
     return bookService.create(bookReqDto);
   }
 
@@ -41,11 +41,11 @@ public class BookController {
     return bookService.retrieve(booksReqDto);
   }
 
-  @PutMapping("/{pid}")
+  @PutMapping("")
   @ApiOperation("put 책 정보 수정하기 API")
   // TODO: pid 와 bookReqDto 따로 받은 이유 짐작은 되나 그럴필요 없음.
-  public ResponseEntity<ResponseDto<Void>> update(@PathVariable @ApiParam(value = "수정할 책의 번호", required = true) int pid, @RequestBody @ApiParam(value = "수정할 책의 정보", required = true) @Valid BookReqDto bookReqDto) {
-    return bookService.update(pid, bookReqDto);
+  public ResponseEntity<ResponseDto<Void>> update(@RequestBody @ApiParam(value = "수정할 책의 정보", required = true) @Valid BookReqDto bookReqDto) {
+    return bookService.update(bookReqDto);
   }
 
   @DeleteMapping("/{pid}")

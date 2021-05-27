@@ -1,19 +1,22 @@
 package kr.co.zzimcar.dto.book;
 
 
+
 import lombok.Data;
+
 
 import javax.validation.constraints.*;
 import java.util.Date;
 
 @Data
 public class BookReqDto {
-    // TODO: notnull 과 notblank 를 둘 다 써야만 할까요..?
-    @NotNull(message = "저자를 입력하세요")
+
+
+    private int pid;
+
     @NotBlank(message = "한 글자 이상의 문자를 쓰세요")
     private String author;
 
-    @NotNull(message = "출판사를 입력하세요")
     @NotBlank(message = "한 글자 이상의 문자를 쓰세요")
     private String publisher;
 
@@ -26,7 +29,6 @@ public class BookReqDto {
     @PositiveOrZero(message = "가격은 양수이거나 0이여야 합니다")  // 양수이거나 0 이여야만 패스스  private int price;
     private Integer price;
 
-    @NotNull(message = "제목을 입력하세요")
     @NotBlank(message = "한 글자 이상의 문자를 쓰세요")
     private String title;
 }

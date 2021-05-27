@@ -24,6 +24,7 @@ public class BookServiceImpl implements BookService {
   private final Logger log = LogManager.getLogger(BookServiceImpl.class);
   private final BookDao bookDao;
 
+
   @Override
   public ResponseEntity<ResponseDto<Void>> create(BookReqDto bookReqDto) {
 
@@ -36,17 +37,12 @@ public class BookServiceImpl implements BookService {
   @Override
   public ResponseEntity<ResponseDto<BookResDto>> retrieveOne(int pid) {
 
-    try {
+
       BookDto bookDto = bookDao.retrieveOne(pid);
       BookResDto bookResDto = new BookResDto(bookDto);
       ResponseDto<BookResDto> responseDto = new ResponseDto<>(true);
       responseDto.setData(bookResDto);
       return ResponseEntity.ok(responseDto);
-    } catch (Exception e) {
-      log.info(" --책 정보 pid로 불러오기 실패", e);
-      throw new ApiException(BOOK_RETRIEVEONE_FAILED);
-
-    }
   }
 
   @Override
@@ -64,15 +60,15 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public ResponseEntity<ResponseDto<Void>> update(int pid, BookReqDto bookReqDto) {
+  public ResponseEntity<ResponseDto<Void>> update(BookReqDto bookReqDto) {
 
-    bookDao.update(new BookDto(pid, bookReqDto));
+    bookDao.update(new BookDto(bookReqDto));
     return ResponseEntity.ok(new ResponseDto<>(true));
   }
 
   @Override
   public ResponseEntity<ResponseDto<Void>> delete(int pid) {
-
+    checkIntParams(pid);
     bookDao.delete(pid);
     return ResponseEntity.ok(new ResponseDto<>(true));
   }
@@ -80,6 +76,10 @@ public class BookServiceImpl implements BookService {
 
   private void checkOrderVaild(BooksReqDto booksReqDto) {
     if (!"desc".equals(booksReqDto.getOrder()) && !"asc".equals(booksReqDto.getOrder())) throw new ApiException(BOOK_PAGING_INVAILD_ORDER);
+  }
+
+  private void checkIntParams(int pid) {
+    if (pid <= 0) throw new ApiException(LOAD_PID);
   }
 }
 

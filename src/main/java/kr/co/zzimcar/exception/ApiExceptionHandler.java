@@ -1,12 +1,12 @@
 package kr.co.zzimcar.exception;
 
-import io.swagger.models.auth.In;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.SyntaxException;
 import kr.co.zzimcar.dto.ResponseDto;
-import kr.co.zzimcar.serviceImpl.BookServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLSyntaxErrorException;
 import java.util.List;
+
+import static kr.co.zzimcar.enumeration.ResponseCode.PROPERTY_REFERENCE_EXCEPTION;
+import static kr.co.zzimcar.enumeration.ResponseCode.SQL_SYNTAX_EXCEPTION;
 
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -70,6 +74,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(ApiException.class)
   protected ResponseEntity<Object> handleIntApiException(ApiException ex) {
     return buildResponseEntity(new ResponseDto(ex));
+  }
 
+  @ExceptionHandler(SQLSyntaxErrorException.class)
+  protected ResponseEntity<Object> handleSQLSyntaxErrorException(SQLSyntaxErrorException ex){
+    return buildResponseEntity(new ResponseDto(SQL_SYNTAX_EXCEPTION));
+  }
+
+  @ExceptionHandler(PropertyReferenceException.class)
+  protected ResponseEntity<Object> handlePropertyReferenceException(PropertyReferenceException ex){
+    return buildResponseEntity(new ResponseDto<>(PROPERTY_REFERENCE_EXCEPTION));
   }
 }

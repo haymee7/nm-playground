@@ -57,7 +57,7 @@ public class BlogServiceImpl implements BlogService {
 
   @Override
   public ResponseEntity<ResponseDto<BlogDataDto>> retrieve(BlogsReqDto blogsReqDto) {
-    try {
+
       List<BlogResDto> blogDto = blogDao.retrieve(blogsReqDto);
       if (blogDto == null) throw new ApiException(BLOG_RETRIEVE_NULL);
 
@@ -68,10 +68,7 @@ public class BlogServiceImpl implements BlogService {
       responseDto.setData(dataDto);
 
       return ResponseEntity.ok(responseDto);
-    } catch (Exception e) {
-      log.info("-- 블로그 통합조회 실패", e);
-      throw new ApiException(BLOG_INTRETRIEVE_FAILED);
-    }
+
   }
 
   @Override
@@ -110,13 +107,13 @@ public class BlogServiceImpl implements BlogService {
   }
 
   private void checkRetrieveListParams(int sp, int cnt, String sort) {
-    if (sp < 0) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SP);
-    if (cnt < 1) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_CNT);
+    if (sp < 0) throw new ApiException(PAGING_REQ_PARAM_INVALID_SP);
+    if (cnt < 1) throw new ApiException(PAGING_REQ_PARAM_INVALID_CNT);
     if (!"D".equals(sort) && !"A".equals(sort)) throw new ApiException(BLOG_PAGING_REQ_PARAM_INVALID_SORT);
   }
 
   private void checkIntParams(int pid) {
-    if (pid <= 0) throw new ApiException(BLOG_LOAD_PID);
+    if (pid <= 0) throw new ApiException(LOAD_PID);
   }
 }
 
