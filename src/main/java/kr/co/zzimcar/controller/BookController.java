@@ -43,7 +43,6 @@ public class BookController {
 
   @PutMapping("")
   @ApiOperation("put 책 정보 수정하기 API")
-  // TODO: pid 와 bookReqDto 따로 받은 이유 짐작은 되나 그럴필요 없음.
   public ResponseEntity<ResponseDto<Void>> update(@RequestBody @ApiParam(value = "수정할 책의 정보", required = true) @Valid BookReqDto bookReqDto) {
     return bookService.update(bookReqDto);
   }
